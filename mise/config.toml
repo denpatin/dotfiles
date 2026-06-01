@@ -1,0 +1,16 @@
+[tools]
+node = "lts"
+python = "3.14"
+rust = "1.95"
+uv = "latest"
+ruby = "4.0"
+go = "1.26"
+zig = "0.16"
+crystal = "1.20"
+erlang = "29"
+elixir = "1.20"
+
+[settings]
+
+[settings.ruby]
+compile = false

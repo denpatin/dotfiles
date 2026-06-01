@@ -1,0 +1,21 @@
+[commit]
+	gpgsign = false
+[core]
+	pager = delta
+[delta]
+	dark = true
+	line-numbers = true
+	navigate = true
+	side-by-side = true
+[diff]
+	colorMoved = default
+[interactive]
+	diffFilter = delta --color-only
+[merge]
+	conflictstyle = diff3
+[user]
+	email = hi@dpat.in
+	name = Den Patin
+	signingkey = B01C765229A55F73
+[init]
+	defaultBranch = main
