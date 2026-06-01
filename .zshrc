@@ -49,6 +49,29 @@ check_github_auth() {
   return 0
 }
 
+gcl() {
+  local url="$1"
+  local path="${url#git@github.com:}"
+  path="${path#https://github.com/}"
+  local account="${path%%/*}"
+  local repo="${path##*/}"
+  repo="${repo%.git}"
+  mkdir -p "$HOME/Repos/$account"
+  git clone "$url" "$HOME/Repos/$account/$repo" || return 1
+  cd "$HOME/Repos/$account/$repo"
+}
+
+gclb() {
+  local url="$1"
+  local path="${url#git@github.com:}"
+  path="${path#https://github.com/}"
+  local account="${path%%/*}"
+  local repo="${path##*/}"
+  repo="${repo%.git}"
+  mkdir -p "$HOME/Repos/$account"
+  git clone "$url" "$HOME/Repos/$account/$repo"
+}
+
 sync_dots() {
   local msg="${1:-"Update dotfiles"}"
   pushd "$DOTFILES_DIR" >/dev/null || return 1

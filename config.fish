@@ -50,6 +50,27 @@ function fe
     end
 end
 
+function gcl
+    set -l url $argv[1]
+    set -l path (string replace -r '^git@github\.com:' '' (string replace -r '^https://github\.com/' '' $url))
+    set -l parts (string split '/' $path)
+    set -l account $parts[1]
+    set -l repo (string replace -r '\.git$' '' $parts[2])
+    mkdir -p "$HOME/Repos/$account"
+    git clone $url "$HOME/Repos/$account/$repo" || return 1
+    cd "$HOME/Repos/$account/$repo"
+end
+
+function gclb
+    set -l url $argv[1]
+    set -l path (string replace -r '^git@github\.com:' '' (string replace -r '^https://github\.com/' '' $url))
+    set -l parts (string split '/' $path)
+    set -l account $parts[1]
+    set -l repo (string replace -r '\.git$' '' $parts[2])
+    mkdir -p "$HOME/Repos/$account"
+    git clone $url "$HOME/Repos/$account/$repo"
+end
+
 function sync_dots
     set -l msg $argv[1]
     if test -z "$msg"
