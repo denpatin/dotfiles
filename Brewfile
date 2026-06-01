@@ -68,6 +68,7 @@ cask "telegram-desktop"
 cask "tg-pro"
 cask "visual-studio-code"
 cask "vlc"
+cask "vmlx"
 cask "zoom"
 mas "Numbers", id: 361304891
 mas "Pages", id: 361309726
