@@ -19,7 +19,6 @@ alias be="bundle exec"
 alias bs="brew search"
 alias cat="bat"
 alias find="fd"
-alias gph="git push heroku main"
 alias grep="rg"
 alias la="eza -lah --icons=auto --git"
 alias lg="lazygit"
@@ -68,7 +67,6 @@ sync_dots() {
 
 vois() {
   cd "$HOME/Repos/voisapp/backend" || return 1
-  mise install
   ruby -v
   git status -sb
   git fetch origin --quiet
