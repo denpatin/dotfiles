@@ -72,7 +72,6 @@ end
 
 function vois
     cd "$HOME/Repos/voisapp/backend" || return 1
-    mise install
     ruby -v
     git status -sb
     git fetch origin --quiet
