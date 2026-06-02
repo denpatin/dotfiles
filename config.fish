@@ -50,6 +50,28 @@ function fe
     end
 end
 
+function fish_prompt
+    set -l pwd (string replace -r '^'"$HOME" '~' (pwd))
+    set -l split_path (string split '/' $pwd)
+    if test (count $split_path) -gt 3
+        if test "$split_path[1]" = "~"
+            set pwd (string join '/' "~" ".." $split_path[-2] $split_path[-1])
+        else
+            set pwd (string join '/' ".." $split_path[-2] $split_path[-1])
+        end
+    end
+    set_color cyan
+    echo -n $pwd
+    set_color normal
+    if type -q fish_git_prompt
+        set -g __fish_git_prompt_char_stateseparator ' '
+        set_color magenta
+        fish_git_prompt " (%s)"
+    end
+    set_color normal
+    echo -n '> '
+end
+
 function gcl
     set -l url $argv[1]
     set -l path (string replace -r '^git@github\.com:' '' (string replace -r '^https://github\.com/' '' $url))
@@ -96,3 +118,7 @@ function vois
     git status -sb
     git fetch origin --quiet
 end
+
+# Added by OrbStack: command-line tools and integration
+# This won't be added again if you remove it.
+source ~/.orbstack/shell/init2.fish 2>/dev/null || :

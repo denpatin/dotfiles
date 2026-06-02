@@ -49,6 +49,9 @@ check_github_auth() {
   return 0
 }
 
+unalias gcl 2>/dev/null
+unalias gclb 2>/dev/null
+
 gcl() {
   local url="$1"
   local path="${url#git@github.com:}"
