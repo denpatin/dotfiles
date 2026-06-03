@@ -1,7 +1,7 @@
 [tools]
-node = "lts"
+node = "26.3"
 python = "3.14"
-rust = "1.95"
+rust = "1.96"
 uv = "latest"
 ruby = "4.0"
 go = "1.26"
