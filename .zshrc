@@ -61,7 +61,7 @@ gcl() {
   repo="${repo%.git}"
   mkdir -p "$HOME/Repos/$account"
   git clone "$url" "$HOME/Repos/$account/$repo" || return 1
-  cd "$HOME/Repos/$account/$repo"
+  cd "$HOME/Repos/$account/$repo" || return 2
 }
 
 gclb() {
