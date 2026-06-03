@@ -109,3 +109,5 @@ ze() {
 }
 
 eval "$(fzf --zsh)"
+
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
