@@ -120,3 +120,10 @@ function vois
 end
 
 source ~/.orbstack/shell/init2.fish 2>/dev/null || :
+
+fish_add_path --prepend --global /opt/homebrew/opt/llvm/bin
+
+set -gx CC /opt/homebrew/opt/llvm/bin/clang
+set -gx CPPFLAGS "-I/opt/homebrew/opt/llvm/include $CPPFLAGS"
+set -gx CXX /opt/homebrew/opt/llvm/bin/clang++
+set -gx LDFLAGS "-L/opt/homebrew/opt/llvm/lib $LDFLAGS"
