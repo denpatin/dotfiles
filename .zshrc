@@ -110,4 +110,8 @@ ze() {
 
 eval "$(fzf --zsh)"
 
+export CC="/opt/homebrew/opt/llvm/bin/clang"
+export CPPFLAGS="-I/opt/homebrew/opt/llvm/include $CPPFLAGS"
+export CXX="/opt/homebrew/opt/llvm/bin/clang++"
+export LDFLAGS="-L/opt/homebrew/opt/llvm/lib $LDFLAGS"
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
