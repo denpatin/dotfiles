@@ -17,7 +17,7 @@ alias lg="lazygit"
 alias ll="eza -lh --icons=auto --git"
 alias ls="eza --icons=auto"
 alias tree="eza --tree --icons=auto"
-alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup && brew doctor"
+alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup -s && brew doctor"
 
 function bi
     check_github_auth || return 1
