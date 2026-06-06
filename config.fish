@@ -93,6 +93,15 @@ function gclb
     git clone $url "$HOME/Repos/$account/$repo"
 end
 
+function mupd
+    set -l repo "$HOME/Repos/denpatin/music"
+    if not test -x "$repo/update.sh"
+        echo "error: update.sh missing at $repo" >&2
+        return 1
+    end
+    "$repo/update.sh"
+end
+
 function sync_dots
     set -l msg $argv[1]
     if test -z "$msg"
