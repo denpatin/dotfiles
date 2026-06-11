@@ -1,14 +1,15 @@
 [tools]
-node = "26.3"
-python = "3.14"
-rust = "1.96"
-uv = "0.11.20"
-ruby = "4.0"
-go = "1.26"
-zig = "0.16"
+rust = "latest"
+uv = "latest"
+
 crystal = "1.20"
-erlang = "29.0.2"
-elixir = "1.20.1"
+elixir = "1.20"
+erlang = "29.0"
+go = "1.26"
+node = "26"
+python = "3.14"
+ruby = "4.0"
+zig = "0.16"
 
 [settings]
 
