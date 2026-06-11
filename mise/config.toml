@@ -11,7 +11,6 @@ erlang = "29.0"
 elixir = "1.20.1"
 
 [settings]
-minimum_release_age = "0d"
 
 [settings.ruby]
 compile = false
