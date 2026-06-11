@@ -4,6 +4,7 @@
 Include ~/.orbstack/ssh/config
 
 Host github.com
+  IgnoreUnknown UseKeychain
   IdentityFile ~/.ssh/id_ed25519
   UseKeychain yes
   AddKeysToAgent yes

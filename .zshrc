@@ -1,6 +1,3 @@
-# shellcheck shell=bash
-# shellcheck disable=SC2034,SC1091
-
 export DOTFILES_DIR="$HOME/dotfiles"
 export EDITOR="nvim"
 export LANG="en_US.UTF-8"
@@ -11,12 +8,14 @@ ZSH_THEME="robbyrussell"
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 source "$ZSH/oh-my-zsh.sh"
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 eval "$(mise activate zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 
 alias be="bundle exec"
-alias bs="brew search"
 alias cat="bat"
 alias find="fd"
 alias grep="rg"
@@ -25,17 +24,27 @@ alias lg="lazygit"
 alias ll="eza -lh --icons=auto --git"
 alias ls="eza --icons=auto"
 alias tree="eza --tree --icons=auto"
-alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup && brew doctor"
 
-bi() {
-  check_github_auth || return 1
-  brew install "$@" && sync_dots "Install $*"
-}
+if command -v brew >/dev/null 2>&1; then
+  alias bs="brew search"
+  alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup -s && brew doctor"
+elif command -v apt-get >/dev/null 2>&1; then
+  alias upd="sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y && mise upgrade"
+elif command -v pacman >/dev/null 2>&1; then
+  alias upd="sudo pacman -Syu && mise upgrade"
+fi
 
-bu() {
-  check_github_auth || return 1
-  brew uninstall "$@" && sync_dots "Uninstall $*"
-}
+if command -v brew >/dev/null 2>&1; then
+  bi() {
+    check_github_auth || return 1
+    brew install "$@" && sync_dots "Install $*"
+  }
+
+  bu() {
+    check_github_auth || return 1
+    brew uninstall "$@" && sync_dots "Uninstall $*"
+  }
+fi
 
 check_github_auth() {
   if [[ ! -f "$HOME/.ssh/id_ed25519" ]]; then
@@ -75,10 +84,21 @@ gclb() {
   git clone "$url" "$HOME/Repos/$account/$repo"
 }
 
+mupd() {
+  local repo="$HOME/Repos/denpatin/music"
+  if [[ ! -x "$repo/update.sh" ]]; then
+    echo "error: update.sh missing at $repo" >&2
+    return 1
+  fi
+  "$repo/update.sh"
+}
+
 sync_dots() {
   local msg="${1:-"Update dotfiles"}"
   pushd "$DOTFILES_DIR" >/dev/null || return 1
-  brew bundle dump --force --file="Brewfile" >/dev/null 2>&1
+  if command -v brew >/dev/null 2>&1; then
+    brew bundle dump --force --file="Brewfile" >/dev/null 2>&1
+  fi
 
   git add -A
 
@@ -110,8 +130,12 @@ ze() {
 
 eval "$(fzf --zsh)"
 
-export CC="/opt/homebrew/opt/llvm/bin/clang"
-export CPPFLAGS="-I/opt/homebrew/opt/llvm/include $CPPFLAGS"
-export CXX="/opt/homebrew/opt/llvm/bin/clang++"
-export LDFLAGS="-L/opt/homebrew/opt/llvm/lib $LDFLAGS"
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+source "$HOME/.orbstack/shell/init.zsh" 2>/dev/null || :
+
+if [[ -d /opt/homebrew/opt/llvm ]]; then
+  export CC="/opt/homebrew/opt/llvm/bin/clang"
+  export CPPFLAGS="-I/opt/homebrew/opt/llvm/include $CPPFLAGS"
+  export CXX="/opt/homebrew/opt/llvm/bin/clang++"
+  export LDFLAGS="-L/opt/homebrew/opt/llvm/lib $LDFLAGS"
+  export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+fi

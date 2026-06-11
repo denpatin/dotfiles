@@ -1,0 +1,12 @@
+[tools]
+bat = "latest"
+delta = "latest"
+eza = "latest"
+fd = "latest"
+fzf = "latest"
+lazygit = "latest"
+neovim = "latest"
+ripgrep = "latest"
+shellcheck = "latest"
+tectonic = "latest"
+zoxide = "latest"

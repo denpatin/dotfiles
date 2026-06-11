@@ -3,12 +3,16 @@ set -gx EDITOR nvim
 set -gx LANG "en_US.UTF-8"
 set -gx LC_ALL "en_US.UTF-8"
 
-/opt/homebrew/bin/brew shellenv | source
+fish_add_path --global "$HOME/.local/bin"
+
+if test -x /opt/homebrew/bin/brew
+    /opt/homebrew/bin/brew shellenv | source
+end
+
 mise activate fish | source
 zoxide init fish --cmd cd | source
 
 alias be="bundle exec"
-alias bs="brew search"
 alias cat="bat"
 alias find="fd"
 alias grep="rg"
@@ -17,16 +21,26 @@ alias lg="lazygit"
 alias ll="eza -lh --icons=auto --git"
 alias ls="eza --icons=auto"
 alias tree="eza --tree --icons=auto"
-alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup -s && brew doctor"
 
-function bi
-    check_github_auth || return 1
-    brew install $argv && sync_dots "Install "(string join " " $argv)
+if type -q brew
+    alias bs="brew search"
+    alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup -s && brew doctor"
+else if type -q apt-get
+    alias upd="sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y && mise upgrade"
+else if type -q pacman
+    alias upd="sudo pacman -Syu && mise upgrade"
 end
 
-function bu
-    check_github_auth || return 1
-    brew uninstall $argv && sync_dots "Uninstall "(string join " " $argv)
+if type -q brew
+    function bi
+        check_github_auth || return 1
+        brew install $argv && sync_dots "Install "(string join " " $argv)
+    end
+
+    function bu
+        check_github_auth || return 1
+        brew uninstall $argv && sync_dots "Uninstall "(string join " " $argv)
+    end
 end
 
 function check_github_auth
@@ -108,7 +122,9 @@ function sync_dots
         set msg "Update dotfiles"
     end
     pushd "$DOTFILES_DIR" >/dev/null || return 1
-    brew bundle dump --force --file="Brewfile" >/dev/null 2>&1
+    if type -q brew
+        brew bundle dump --force --file="Brewfile" >/dev/null 2>&1
+    end
 
     git add -A
 
@@ -130,9 +146,12 @@ end
 
 source ~/.orbstack/shell/init2.fish 2>/dev/null || :
 
-fish_add_path --prepend --global /opt/homebrew/opt/llvm/bin
+if test -d /opt/homebrew/opt/llvm
+    fish_add_path --prepend --global /opt/homebrew/opt/llvm/bin
+    set -gx CC /opt/homebrew/opt/llvm/bin/clang
+    set -gx CPPFLAGS "-I/opt/homebrew/opt/llvm/include $CPPFLAGS"
+    set -gx CXX /opt/homebrew/opt/llvm/bin/clang++
+    set -gx LDFLAGS "-L/opt/homebrew/opt/llvm/lib $LDFLAGS"
+end
 
-set -gx CC /opt/homebrew/opt/llvm/bin/clang
-set -gx CPPFLAGS "-I/opt/homebrew/opt/llvm/include $CPPFLAGS"
-set -gx CXX /opt/homebrew/opt/llvm/bin/clang++
-set -gx LDFLAGS "-L/opt/homebrew/opt/llvm/lib $LDFLAGS"
+fish_add_path "$HOME/.local/bin"
