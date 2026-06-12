@@ -21,6 +21,7 @@ alias lg="lazygit"
 alias ll="eza -lh --icons=auto --git"
 alias ls="eza --icons=auto"
 alias tree="eza --tree --icons=auto"
+alias top="syswatch"
 
 if type -q brew
     alias bs="brew search"
