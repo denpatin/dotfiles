@@ -64,6 +64,8 @@ brew "imagemagick"
 brew "include-what-you-use"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
+# Handy way to save and run project-specific commands
+brew "just"
 # Compare and mark up LaTeX file differences
 brew "latexdiff"
 # Add indentation to LaTeX files
