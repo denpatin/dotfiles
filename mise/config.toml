@@ -2,16 +2,16 @@
 rust = "stable"
 uv = "latest"
 
+bun = "latest"
+node = "lts"
+
 crystal = "1.20"
 elixir = "1.20"
 erlang = "29.0"
 go = "1.26"
-node = "lts"
 python = "3.14"
 ruby = "4.0"
 zig = "0.16"
-jq = "latest"
-bun = "latest"
 
 [settings]
 
