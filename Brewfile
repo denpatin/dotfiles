@@ -134,6 +134,8 @@ brew "zoxide"
 brew "homebrew/brew-vulns/brew-vulns"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun"
+# Android SDK component
+cask "android-platform-tools"
 # Web browser focusing on privacy
 cask "brave-browser"
 # Two-panel file manager
