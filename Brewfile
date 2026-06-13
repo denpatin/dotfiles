@@ -112,6 +112,8 @@ brew "tectonic"
 brew "tree"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
+# Framework for Verilog RTL synthesis
+brew "yosys"
 # Process YAML, JSON, XML, CSV and properties documents from the CLI
 brew "yq"
 # General-purpose lossless data-compression library
