@@ -28,11 +28,11 @@ alias top="syswatch"
 
 if command -v brew >/dev/null 2>&1; then
   alias bs="brew search"
-  alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup -s && brew doctor"
+  alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup -s && brew doctor; mise upgrade; mise_elixir_pin; mise prune; mise doctor | tail -n 1"
 elif command -v apt-get >/dev/null 2>&1; then
-  alias upd="sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y && mise upgrade"
+  alias upd="sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y && mise upgrade; mise_elixir_pin"
 elif command -v pacman >/dev/null 2>&1; then
-  alias upd="sudo pacman -Syu && mise upgrade"
+  alias upd="sudo pacman -Syu && mise upgrade; mise_elixir_pin"
 fi
 
 if command -v brew >/dev/null 2>&1; then
@@ -46,6 +46,28 @@ if command -v brew >/dev/null 2>&1; then
     brew uninstall "$@" && sync_dots "Uninstall $*"
   }
 fi
+
+mise_elixir_pin() {
+  command -v mise >/dev/null 2>&1 || return 0
+  local cfg="$HOME/.config/mise/config.toml"
+  [[ -f "$cfg" ]] || return 0
+  local cur
+  cur=$(sed -n 's/^elixir = "\([^"]*\)".*/\1/p' "$cfg")
+  [[ -n "$cur" ]] || return 0
+  local rest="${cur#*.}"
+  local series="${cur%%.*}.${rest%%.*}"
+  local otp
+  otp=$(mise current erlang 2>/dev/null)
+  otp="${otp%%.*}"
+  [[ -n "$otp" ]] || return 0
+  local ver
+  ver=$(mise ls-remote elixir | grep -E "^${series}\.[0-9]+-otp-${otp}\$" | tail -n 1)
+  [[ -n "$ver" ]] || return 0
+  [[ "$ver" == "$cur" ]] && return 0
+  sed -i.bak "s/^elixir = \"[^\"]*\"/elixir = \"$ver\"/" "$cfg" && rm -f "$cfg.bak"
+  echo "elixir: $cur → $ver"
+  mise install "elixir@$ver"
+}
 
 check_github_auth() {
   if [[ ! -f "$HOME/.ssh/id_ed25519" ]]; then

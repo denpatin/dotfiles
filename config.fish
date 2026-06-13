@@ -25,11 +25,11 @@ alias top="syswatch"
 
 if type -q brew
     alias bs="brew search"
-    alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup -s && brew doctor"
+    alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup -s && brew doctor; mise upgrade; mise_elixir_pin; mise prune; mise doctor | tail -n 1"
 else if type -q apt-get
-    alias upd="sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y && mise upgrade"
+    alias upd="sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y && mise upgrade; mise_elixir_pin"
 else if type -q pacman
-    alias upd="sudo pacman -Syu && mise upgrade"
+    alias upd="sudo pacman -Syu && mise upgrade; mise_elixir_pin"
 end
 
 if type -q brew
@@ -42,6 +42,25 @@ if type -q brew
         check_github_auth || return 1
         brew uninstall $argv && sync_dots "Uninstall "(string join " " $argv)
     end
+end
+
+function mise_elixir_pin --description "Pin elixir to newest patch matching installed erlang OTP"
+    type -q mise || return 0
+    set -l cfg "$HOME/.config/mise/config.toml"
+    test -f "$cfg" || return 0
+    set -l cur (string match -r '^elixir = "([^"]+)"' < $cfg)[2]
+    test -n "$cur" || return 0
+    set -l parts (string split '.' $cur)
+    set -l series "$parts[1].$parts[2]"
+    set -l otp (string split '.' (mise current erlang 2>/dev/null))[1]
+    test -n "$otp" || return 0
+    set -l ver (mise ls-remote elixir | string match -r "^$series\.[0-9]+-otp-$otp\$" | tail -n 1)
+    test -n "$ver" || return 0
+    test "$ver" = "$cur" && return 0
+    set -l content (string replace -r '^elixir = "[^"]+"' "elixir = \"$ver\"" < $cfg)
+    printf '%s\n' $content >$cfg
+    echo "elixir: $cur → $ver"
+    mise install "elixir@$ver"
 end
 
 function check_github_auth
