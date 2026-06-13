@@ -100,6 +100,8 @@ brew "rust-analyzer"
 brew "safestringlib"
 # Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
+# Modern and pretty fancy file manager for the terminal
+brew "superfile"
 # ISO/Edinburgh-style Prolog interpreter
 brew "swi-prolog"
 # Cross-platform system diagnostics TUI
