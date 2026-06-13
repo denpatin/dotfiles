@@ -26,6 +26,8 @@ brew "clang-format"
 brew "cmake"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
+# Static analysis of C and C++ code
+brew "cppcheck"
 # Next-gen compiler infrastructure
 brew "llvm"
 # Package compiler and linker metadata toolkit
@@ -56,6 +58,8 @@ brew "github-markdown-toc"
 brew "gnupg"
 # CLI for Heroku
 brew "heroku"
+# Verilog simulation and synthesis tool
+brew "icarus-verilog"
 # Generic library support script
 brew "libtool"
 # Tools and libraries to manipulate images in select formats
@@ -86,6 +90,10 @@ brew "mermaid-cli"
 brew "mise"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Small build system for use with gyp or CMake
+brew "ninja"
+# Create, run, and share large language models (LLMs)
+brew "ollama"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
 # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
@@ -112,6 +120,8 @@ brew "tectonic"
 brew "tree"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
+# Verilog simulator
+brew "verilator"
 # Framework for Verilog RTL synthesis
 brew "yosys"
 # Process YAML, JSON, XML, CSV and properties documents from the CLI
@@ -137,10 +147,14 @@ cask "gemini"
 cask "ghostty"
 # Client for the Google Drive storage service
 cask "google-drive"
+# GTK+ based wave viewer
+cask "gtkwave"
 # JetBrains tools manager
 cask "jetbrains-toolbox"
 # Full TeX Live distribution without GUI applications
 cask "mactex-no-gui"
+# Minimal installer for conda specific to conda-forge
+cask "miniforge"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Replacement for Docker Desktop
