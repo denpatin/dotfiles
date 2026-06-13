@@ -1,3 +1,4 @@
+tap "homebrew/brew-vulns"
 tap "oven-sh/bun", trusted: true
 # YAML Parser
 brew "libyaml"
@@ -61,6 +62,8 @@ brew "libtool"
 brew "imagemagick"
 # Tool to analyze #includes in C and C++ source files
 brew "include-what-you-use"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
 # Compare and mark up LaTeX file differences
 brew "latexdiff"
 # Add indentation to LaTeX files
@@ -109,6 +112,8 @@ brew "uv"
 brew "zlib"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+# Check Homebrew packages for known vulnerabilities via osv.dev
+brew "homebrew/brew-vulns/brew-vulns"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun"
 # Web browser focusing on privacy
