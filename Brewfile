@@ -149,8 +149,6 @@ cask "gemini"
 cask "ghostty"
 # Client for the Google Drive storage service
 cask "google-drive"
-# GTK+ based wave viewer
-cask "gtkwave"
 # JetBrains tools manager
 cask "jetbrains-toolbox"
 # Full TeX Live distribution without GUI applications
