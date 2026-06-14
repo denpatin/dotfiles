@@ -1,4 +1,5 @@
 tap "homebrew/brew-vulns"
+tap "homebrew/core"
 tap "oven-sh/bun", trusted: true
 # YAML Parser
 brew "libyaml"
