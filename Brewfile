@@ -130,8 +130,6 @@ brew "yq"
 brew "zlib"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
-# Check Homebrew packages for known vulnerabilities via osv.dev
-brew "homebrew/brew-vulns/brew-vulns"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun"
 # Android SDK component
@@ -169,6 +167,8 @@ cask "raycast"
 cask "rectangle"
 # Team communication and collaboration software
 cask "slack"
+# Music streaming service
+cask "spotify"
 # System monitor for the menu bar
 cask "stats"
 # Text editor for code, markup and prose
@@ -239,4 +239,6 @@ vscode "ziglang.vscode-zig"
 go "cmd/go"
 go "cmd/gofmt"
 uv "jupyterlab"
+npm "cline"
 npm "corepack"
+npm "kanban"
