@@ -1,5 +1,4 @@
 tap "homebrew/brew-vulns"
-tap "homebrew/core"
 tap "oven-sh/bun", trusted: true
 # YAML Parser
 brew "libyaml"
@@ -156,6 +155,8 @@ cask "mactex-no-gui"
 cask "miniforge"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
+# Simple application that will prevent iTunes or Apple Music from launching
+cask "notunes"
 # Replacement for Docker Desktop
 cask "orbstack"
 # App wrapper for Postgres
