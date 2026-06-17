@@ -35,7 +35,7 @@ end
 if type -q brew
     function bi
         check_github_auth || return 1
-        brew install $argv && sync_dots "Install "(string join " " $argv)
+        brew update &>/dev/null && brew install $argv && sync_dots "Install "(string join " " $argv)
     end
 
     function bu
