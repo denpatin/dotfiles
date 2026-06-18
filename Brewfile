@@ -141,8 +141,6 @@ cask "commander-one"
 cask "font-jetbrains-mono"
 # Kext-less implementation of FUSE
 cask "fuse-t"
-# Disk space cleaner that finds and deletes duplicated and similar files
-cask "gemini"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
 # Client for the Google Drive storage service
@@ -192,10 +190,12 @@ mas "Pages", id: 361309726
 mas "PDFgear", id: 6469021132
 mas "TestFlight", id: 899247664
 mas "Xcode", id: 497799835
+vscode "andrewbutson.github-copilot-llm-gateway"
 vscode "charliermarsh.ruff"
 vscode "christian-kohler.path-intellisense"
 vscode "crystal-lang-tools.crystal-lang"
 vscode "dan-c-underwood.arm"
+vscode "danlambiase.lmstudio-copilot-provider"
 vscode "davidanson.vscode-markdownlint"
 vscode "donjayamanne.githistory"
 vscode "eamodio.gitlens"
@@ -230,6 +230,7 @@ vscode "pgourlain.erlang"
 vscode "redhat.vscode-yaml"
 vscode "rust-lang.rust-analyzer"
 vscode "saoudrizwan.claude-dev"
+vscode "selfagency.opilot"
 vscode "shopify.ruby-lsp"
 vscode "sporto.rails-go-to-spec"
 vscode "sunshaoce.risc-v"
