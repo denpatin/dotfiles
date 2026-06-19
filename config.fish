@@ -146,7 +146,7 @@ function sync_dots
     end
     pushd "$DOTFILES_DIR" >/dev/null || return 1
     if type -q brew
-        brew bundle dump --force --file="Brewfile" >/dev/null 2>&1
+        brew bundle dump --force --no-lock --file="Brewfile" >/dev/null 2>&1
     end
 
     git add -A
