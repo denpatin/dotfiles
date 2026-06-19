@@ -12,7 +12,10 @@ end
 mise activate fish | source
 zoxide init fish --cmd cd | source
 
-alias be="bundle exec"
+if type -q rv
+    rv shell init fish | source
+end
+
 alias cat="bat"
 alias find="fd"
 alias grep="rg"

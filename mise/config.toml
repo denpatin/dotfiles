@@ -1,7 +1,6 @@
 [tools]
 rebar = "latest"
 rust = "stable"
-uv = "latest"
 
 bun = "latest"
 node = "lts"
@@ -19,3 +18,4 @@ nim = "2.2"
 odin = "latest"
 tinygo = "0.41"
 zig = "0.16"
+heroku = "latest"

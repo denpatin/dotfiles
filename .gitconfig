@@ -19,3 +19,5 @@
 	signingkey = B01C765229A55F73
 [init]
 	defaultBranch = main
+[credential "https://git.heroku.com"]
+	helper = !heroku git:credentials

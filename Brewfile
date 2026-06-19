@@ -30,12 +30,6 @@ brew "container"
 brew "coreutils"
 # Static analysis of C and C++ code
 brew "cppcheck"
-# Next-gen compiler infrastructure
-brew "llvm"
-# Package compiler and linker metadata toolkit
-brew "pkgconf"
-# Language Server Protocol implementation for Crystal
-brew "crystalline"
 # Perl lib for reading and writing EXIF metadata
 brew "exiftool"
 # Modern, maintained replacement for ls
@@ -58,14 +52,14 @@ brew "git-delta"
 brew "github-markdown-toc"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
-# CLI for Heroku
-brew "heroku"
 # Verilog simulation and synthesis tool
 brew "icarus-verilog"
 # Generic library support script
 brew "libtool"
 # Tools and libraries to manipulate images in select formats
 brew "imagemagick"
+# Next-gen compiler infrastructure
+brew "llvm"
 # Tool to analyze #includes in C and C++ source files
 brew "include-what-you-use"
 # Lightweight and flexible command-line JSON processor
@@ -80,14 +74,10 @@ brew "latexindent"
 brew "libomp"
 # LLVM Project Linker
 brew "lld"
-# Fast, flexible, config-based cli for linting Markdown/CommonMark files
-brew "markdownlint-cli2"
 # Mac App Store command-line interface
 brew "mas"
 # Markdown renderer in the terminal written in rust
 brew "md-tui"
-# CLI for Mermaid library
-brew "mermaid-cli"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
 # Ambitious Vim-fork focused on extensibility and agility
@@ -98,14 +88,12 @@ brew "ninja"
 brew "ollama"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
-# Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
-brew "prettier"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Ruby autoformatter
 brew "rubyfmt"
-# Experimental Rust compiler front-end for IDEs
-brew "rust-analyzer"
 # Ruby version manager
 brew "rv"
 # Safe string operations and memory routines
@@ -134,8 +122,6 @@ brew "yq"
 brew "zlib"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
-# Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
-brew "oven-sh/bun/bun"
 # Android SDK component
 cask "android-platform-tools"
 # Web browser focusing on privacy
