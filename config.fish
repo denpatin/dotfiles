@@ -28,7 +28,7 @@ alias top="syswatch"
 
 if type -q brew
     alias bs="brew search"
-    alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup -s && brew doctor; mise upgrade; mise_elixir_pin; mise prune; mise doctor | tail -n 1"
+    alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup -s && brew doctor; mise upgrade; mise_elixir_pin; mise doctor | tail -n 1"
 else if type -q apt-get
     alias upd="sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y && mise upgrade; mise_elixir_pin"
 else if type -q pacman
