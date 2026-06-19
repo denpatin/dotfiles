@@ -106,6 +106,8 @@ brew "ripgrep"
 brew "rubyfmt"
 # Experimental Rust compiler front-end for IDEs
 brew "rust-analyzer"
+# Ruby version manager
+brew "rv"
 # Safe string operations and memory routines
 brew "safestringlib"
 # Static analysis and lint tool, for (ba)sh scripts
@@ -244,6 +246,4 @@ vscode "ziglang.vscode-zig"
 go "cmd/go"
 go "cmd/gofmt"
 uv "jupyterlab"
-npm "cline"
 npm "corepack"
-npm "kanban"

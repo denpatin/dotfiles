@@ -17,14 +17,5 @@ julia = "1.12"
 leiningen = "2.13"
 nim = "2.2"
 odin = "latest"
-ruby = "4.0"
 tinygo = "0.41"
 zig = "0.16"
-
-[settings]
-
-[settings.ruby]
-compile = false
-
-[settings.python]
-compile = false
