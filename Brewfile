@@ -24,6 +24,8 @@ brew "chromaprint"
 brew "clang-format"
 # Cross-platform make
 brew "cmake"
+# Create and run Linux containers using lightweight virtual machines
+brew "container"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
 # Static analysis of C and C++ code
