@@ -24,15 +24,21 @@ alias lg="lazygit"
 alias ll="eza -lh --icons=auto --git"
 alias ls="eza --icons=auto"
 alias tree="eza --tree --icons=auto"
-alias top="syswatch"
+if type -q syswatch
+    alias top="syswatch"
+end
 
 if type -q brew
     alias bs="brew search"
     alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup -s && brew doctor; mise upgrade; mise_elixir_pin; mise doctor | tail -n 1"
 else if type -q apt-get
-    alias upd="sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y && mise upgrade; mise_elixir_pin"
+    alias upd="sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y; mise upgrade; mise_elixir_pin; mise doctor | tail -n 1"
+else if type -q paru
+    alias upd="paru -Syu; mise upgrade; mise_elixir_pin; mise doctor | tail -n 1"
 else if type -q pacman
-    alias upd="sudo pacman -Syu && mise upgrade; mise_elixir_pin"
+    alias upd="sudo pacman -Syu; mise upgrade; mise_elixir_pin; mise doctor | tail -n 1"
+else if type -q dnf
+    alias upd="sudo dnf upgrade -y && sudo dnf autoremove -y; mise upgrade; mise_elixir_pin; mise doctor | tail -n 1"
 end
 
 if type -q brew

@@ -2,6 +2,7 @@ export DOTFILES_DIR="$HOME/dotfiles"
 export EDITOR="nvim"
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
+export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
@@ -15,7 +16,10 @@ fi
 eval "$(mise activate zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 
-alias be="bundle exec"
+if command -v rv >/dev/null 2>&1; then
+  eval "$(rv shell init zsh)"
+fi
+
 alias cat="bat"
 alias find="fd"
 alias grep="rg"
@@ -24,21 +28,25 @@ alias lg="lazygit"
 alias ll="eza -lh --icons=auto --git"
 alias ls="eza --icons=auto"
 alias tree="eza --tree --icons=auto"
-alias top="syswatch"
+command -v syswatch >/dev/null 2>&1 && alias top="syswatch"
 
 if command -v brew >/dev/null 2>&1; then
   alias bs="brew search"
-  alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup -s && brew doctor; mise upgrade; mise_elixir_pin; mise prune; mise doctor | tail -n 1"
+  alias upd="brew update && brew upgrade --cask --greedy && brew upgrade && brew autoremove && brew cleanup -s && brew doctor; mise upgrade; mise_elixir_pin; mise doctor | tail -n 1"
 elif command -v apt-get >/dev/null 2>&1; then
-  alias upd="sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y && mise upgrade; mise_elixir_pin"
+  alias upd="sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get autoremove -y; mise upgrade; mise_elixir_pin; mise doctor | tail -n 1"
+elif command -v paru >/dev/null 2>&1; then
+  alias upd="paru -Syu; mise upgrade; mise_elixir_pin; mise doctor | tail -n 1"
 elif command -v pacman >/dev/null 2>&1; then
-  alias upd="sudo pacman -Syu && mise upgrade; mise_elixir_pin"
+  alias upd="sudo pacman -Syu; mise upgrade; mise_elixir_pin; mise doctor | tail -n 1"
+elif command -v dnf >/dev/null 2>&1; then
+  alias upd="sudo dnf upgrade -y && sudo dnf autoremove -y; mise upgrade; mise_elixir_pin; mise doctor | tail -n 1"
 fi
 
 if command -v brew >/dev/null 2>&1; then
   bi() {
     check_github_auth || return 1
-    brew install "$@" && sync_dots "Install $*"
+    brew update &>/dev/null && brew install "$@" && sync_dots "Install $*"
   }
 
   bu() {
@@ -120,7 +128,7 @@ sync_dots() {
   local msg="${1:-"Update dotfiles"}"
   pushd "$DOTFILES_DIR" >/dev/null || return 1
   if command -v brew >/dev/null 2>&1; then
-    brew bundle dump --force --file="Brewfile" >/dev/null 2>&1
+    brew bundle dump --force --no-lock --file="Brewfile" >/dev/null 2>&1
   fi
 
   git add -A
