@@ -172,6 +172,8 @@ brew "verilator"
 brew "vips"
 # Execute commands when watched files change
 brew "watchexec"
+# Friendly and fast tool for sending HTTP requests
+brew "xh"
 # Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
 # Framework for Verilog RTL synthesis

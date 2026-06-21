@@ -121,7 +121,7 @@ NB: `ripgrep` stays separate for ad-hoc fast search, tho.
 - VCS / multiplex -- `git`, `jujutsu` (so far only combined with `git`),
   `zellij`
 - Profiling -- `rbspy`
-- API testing -- `hurl`, `atac`, `Bruno`
+- API testing -- `xh`, `hurl`, `atac`, `Bruno`
 - Typesetting -- `Typst` + TeX Live (`latexmk`, `biber`, `chktex`)
 
 ## GUI Apps & Casks

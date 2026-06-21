@@ -17,8 +17,16 @@ ASSUME_YES="${ASSUME_YES:-0}"
 UPGRADE="${UPGRADE:-0}"
 INTERACTIVE=0
 CPU_VENDOR=""
+CPU_MODEL=""
 ISA_LEVEL=""
+IUV_TUNED_MODEL="i7-1370P"
 SELECTED_OPTIONAL=()
+RESULT_DONE=()
+RESULT_PRESENT=()
+RESULT_SKIP=()
+RESULT_FAIL=()
+LAST_STEP_RC=0
+CONFIGS_LINKED=0
 
 log() { printf '\033[0;32m==>\033[0m %s\n' "$*"; }
 info() { printf '    %s\n' "$*"; }
@@ -32,6 +40,19 @@ ok() { printf '  \033[0;32m✓\033[0m %s\n' "$*"; }
 miss() { printf '  \033[0;33m○\033[0m %s\n' "$*"; }
 
 have() { command -v "$1" >/dev/null 2>&1; }
+
+record_done() { RESULT_DONE+=("$1"); }
+record_present() { RESULT_PRESENT+=("$1"); }
+record_skip() { RESULT_SKIP+=("$1"); }
+record_fail() { RESULT_FAIL+=("$1"$'\t'"${2:-re-run ./install.sh to retry}"); }
+
+join_comma() {
+  local out="" item
+  for item in "$@"; do
+    if [ -z "$out" ]; then out="$item"; else out="$out, $item"; fi
+  done
+  printf '%s' "$out"
+}
 
 confirm() {
   local prompt="$1" default="${2:-y}" ans hint
@@ -52,15 +73,30 @@ confirm() {
 run_step() {
   local label="$1"
   shift
-  local rc=0
   set +e
   ( set -e; "$@" )
-  rc=$?
+  LAST_STEP_RC=$?
   set -e
-  if [ "$rc" -ne 0 ]; then
-    warn "step failed: $label (continuing)"
+  if [ "$LAST_STEP_RC" -ne 0 ]; then
+    warn "step failed: $label — continuing (re-run ./install.sh to resume)"
   fi
   return 0
+}
+
+tracked_step() {
+  local label="$1" hint="$2"
+  shift 2
+  run_step "$label" "$@"
+  if [ "$LAST_STEP_RC" -ne 0 ]; then
+    record_fail "$label" "$hint"
+  else
+    record_done "$label"
+  fi
+}
+
+section_confirm() {
+  [ "$OS" = macos ] && return 0
+  confirm "$1"
 }
 
 detect_platform() {
@@ -135,6 +171,7 @@ detect_cpu() {
   CPU_VENDOR="$(awk -F': ' '/^vendor_id/{print $2; exit}' /proc/cpuinfo 2>/dev/null)"
   local model
   model="$(awk -F': ' '/^model name/{print $2; exit}' /proc/cpuinfo 2>/dev/null)"
+  CPU_MODEL="$model"
   if [ "$ARCH" = x86_64 ]; then
     ISA_LEVEL="$(detect_isa_level)"
     log "cpu: ${model:-unknown} (${CPU_VENDOR:-unknown}), supports x86-64-${ISA_LEVEL}"
@@ -770,7 +807,18 @@ prog_intel_undervolt() {
   fi
   install_intel_undervolt_pkg
   have intel-undervolt || { warn "intel-undervolt unavailable, skipping config"; return 0; }
-  configure_intel_undervolt
+  if iuv_model_matches; then
+    configure_intel_undervolt
+  else
+    warn "power limits 30/8 22/10 are tuned for $IUV_TUNED_MODEL; detected '${CPU_MODEL:-unknown}'"
+    info "intel-undervolt installed but left unconfigured for this CPU"
+    info "re-tune /etc/intel-undervolt.conf to this chip's power envelope, then run:"
+    info "  sudo intel-undervolt apply && sudo systemctl enable --now intel-undervolt"
+  fi
+}
+
+iuv_model_matches() {
+  [ -n "$CPU_MODEL" ] && printf '%s' "$CPU_MODEL" | grep -qiF "$IUV_TUNED_MODEL"
 }
 
 install_intel_undervolt_pkg() {
@@ -852,7 +900,11 @@ google_drive|Google Drive (alternatives info)|off
 czkawka|czkawka duplicate and space cleaner (czkawka_cli)|on
 EOF
   if [ "$CPU_VENDOR" = GenuineIntel ]; then
-    echo 'intel_undervolt|intel-undervolt + power limits 30/8 22/10|on'
+    if iuv_model_matches; then
+      echo "intel_undervolt|intel-undervolt + power limits 30/8 22/10 (tuned for $IUV_TUNED_MODEL)|on"
+    else
+      echo "intel_undervolt|intel-undervolt (install only; 30/8 22/10 limits are $IUV_TUNED_MODEL-specific, re-tune for this CPU)|off"
+    fi
   fi
 }
 
@@ -931,15 +983,32 @@ gated_install() {
   label="$(comp_label "$key")"
   if ver="$(comp_status "$key" 2>/dev/null)" && [ -n "$ver" ]; then
     ok "$label — already installed ($ver)"
+    record_present "$label"
     if [ "$UPGRADE" = 1 ] && [ "$key" != google_drive ]; then
       confirm "re-run installer to upgrade $label?" n && run_step "$label" comp_install "$key"
     fi
     return 0
   fi
+  if [ "$key" = google_drive ]; then
+    if confirm "Show Google Drive options for Linux?"; then
+      run_step "$label" comp_install "$key"
+      record_done "$label (info shown)"
+    else
+      info "skipped $label"
+      record_skip "$label"
+    fi
+    return 0
+  fi
   if confirm "Proceed installing $label?"; then
     run_step "$label" comp_install "$key"
+    if comp_status "$key" >/dev/null 2>&1; then
+      record_done "$label"
+    else
+      record_fail "$label" "installer ran but '$key' not detected — see messages above; re-run to retry"
+    fi
   else
     info "skipped $label"
+    record_skip "$label"
   fi
 }
 
@@ -961,7 +1030,7 @@ print_status() {
   done
   printf '  cli tools (via mise):\n'
   local tool
-  for tool in mise bat fd fzf rg ugrep eza delta zoxide nvim shellcheck uv yq jaq just mdt dust duf procs sd hyperfine sccache choose jless jj broot starship bandwhich yazi scc grex watchexec qsv typst hurl rbspy atac zellij; do
+  for tool in mise bat fd fzf rg ugrep eza delta zoxide nvim shellcheck uv yq jaq just mdt dust duf procs sd hyperfine sccache choose jless jj broot starship bandwhich yazi scc grex watchexec qsv typst hurl xh rbspy atac zellij; do
     if have "$tool"; then
       ok "$tool"
     elif [ "$tool" = ugrep ]; then
@@ -1188,21 +1257,27 @@ install_linux() {
 
   if confirm "Proceed installing base system packages (toolchain, fonts, locale)?"; then
     case "$DISTRO_FAMILY" in
-      debian) run_step "base packages" install_base_debian ;;
+      debian) tracked_step "base packages" "fix apt sources/network, then re-run ./install.sh" install_base_debian ;;
       arch)
         if [ "$ARCH" = x86_64 ]; then setup_cachyos_repos; fi
         setup_paru
-        run_step "base packages" install_base_arch
+        tracked_step "base packages" "fix pacman mirrors/keyring, then re-run ./install.sh" install_base_arch
         install_cachyos_core
         ;;
-      rhel) run_step "base packages" install_base_rhel ;;
+      rhel) tracked_step "base packages" "enable EPEL/CRB repos, then re-run ./install.sh" install_base_rhel ;;
       nixos) run_step "base packages" install_base_nixos ;;
     esac
   else
     info "skipped base system packages"
+    record_skip "base packages"
   fi
 
-  run_step "shell package" install_shell_pkg
+  if section_confirm "Proceed installing the $SHELL_CHOICE shell package?"; then
+    tracked_step "shell ($SHELL_CHOICE)" "install '$SHELL_CHOICE' via the package manager, then re-run" install_shell_pkg
+  else
+    info "skipped shell package"
+    record_skip "shell ($SHELL_CHOICE)"
+  fi
 
   log "core programs:"
   local key
@@ -1226,6 +1301,45 @@ Usage: install.sh [--shell fish|zsh] [--yes] [--upgrade] [--status]
   --status   Only print what is installed vs missing, then exit (Linux).
   -h,--help  Show this help.
 EOF
+}
+
+print_summary() {
+  local joined
+  printf '\n\033[0;32m==>\033[0m summary (%s %s)\n' "$OS" "$ARCH"
+  if [ "${#RESULT_DONE[@]}" -gt 0 ]; then
+    joined="$(join_comma "${RESULT_DONE[@]}")"
+    printf '  \033[0;32mdone\033[0m (%d): %s\n' "${#RESULT_DONE[@]}" "$joined"
+  fi
+  if [ "${#RESULT_PRESENT[@]}" -gt 0 ]; then
+    joined="$(join_comma "${RESULT_PRESENT[@]}")"
+    printf '  already present (%d): %s\n' "${#RESULT_PRESENT[@]}" "$joined"
+  fi
+  if [ "${#RESULT_SKIP[@]}" -gt 0 ]; then
+    joined="$(join_comma "${RESULT_SKIP[@]}")"
+    printf '  skipped (%d): %s\n' "${#RESULT_SKIP[@]}" "$joined"
+  fi
+  if [ "${#RESULT_FAIL[@]}" -gt 0 ]; then
+    printf '  \033[0;31mfailed (%d):\033[0m\n' "${#RESULT_FAIL[@]}"
+    local entry name hint
+    for entry in "${RESULT_FAIL[@]}"; do
+      name="${entry%%$'\t'*}"
+      hint="${entry#*$'\t'}"
+      printf '    \033[0;31m✗\033[0m %s — %s\n' "$name" "$hint"
+    done
+  fi
+  printf '  shell: %s' "$SHELL_CHOICE"
+  [ "$CONFIGS_LINKED" = 1 ] && printf '; configs linked: gitconfig, mise, nvim, ghostty, zellij, starship, cargo, ssh, %s, vscode' "$SHELL_CHOICE"
+  printf '\n'
+  printf '  swaps in %s: cat→bat ls→eza find→fd grep→ugrep du→dust df→duf ps→procs cd→zoxide jq→jaq top→syswatch\n' "$SHELL_CHOICE"
+  if [ "${#RESULT_FAIL[@]}" -gt 0 ]; then
+    printf '  some steps need attention — fix the notes above, then re-run \033[1m./install.sh\033[0m (installed items are auto-skipped).\n'
+  else
+    printf '  all good — re-run \033[1m./install.sh\033[0m anytime; installed items are detected and skipped.\n'
+  fi
+  log "system ready."
+  if [ "$(current_login_shell)" != "${SHELL:-}" ]; then
+    info "open a new terminal session to use $SHELL_CHOICE"
+  fi
 }
 
 main() {
@@ -1259,28 +1373,64 @@ main() {
 
   if [ "$OS" = macos ]; then
     install_macos
-  else
-    install_mise_linux
-    install_linux
+    if [ "$SHELL_CHOICE" = zsh ]; then install_oh_my_zsh; fi
+    link_dotfiles
+    install_languages
+    install_python_tools
+    set_default_shell
+    log "system ready."
+    if [ "$(current_login_shell)" != "${SHELL:-}" ]; then
+      log "note: open a new terminal session to use $SHELL_CHOICE"
+    fi
+    return 0
   fi
+
+  install_mise_linux
+  install_linux
 
   if [ "$SHELL_CHOICE" = zsh ]; then
-    install_oh_my_zsh
+    if section_confirm "Set up oh-my-zsh + plugins?"; then
+      tracked_step "oh-my-zsh" "clone from ohmyzsh/ohmyzsh manually; re-run" install_oh_my_zsh
+    else
+      info "skipped oh-my-zsh"
+      record_skip "oh-my-zsh"
+    fi
   fi
 
-  link_dotfiles
-
-  install_languages
-  install_python_tools
-  if [ "$OS" != macos ]; then
-    install_vscode_extensions
+  if section_confirm "Apply dotfiles (symlink configs into your home)?"; then
+    tracked_step "link dotfiles" "check write perms on ~ and ~/.config; re-run" link_dotfiles
+    [ "$LAST_STEP_RC" -eq 0 ] && CONFIGS_LINKED=1
+  else
+    info "skipped dotfile symlinks"
+    record_skip "link dotfiles"
   fi
+
+  if section_confirm "Install CLI tools & language runtimes via mise?"; then
+    tracked_step "mise toolchain" "run 'mise install' to see details; re-run" install_languages
+  else
+    info "skipped mise toolchain"
+    record_skip "mise toolchain"
+  fi
+
+  if section_confirm "Install Python tooling (jupyterlab via uv)?"; then
+    tracked_step "python tooling" "ensure uv is present, then 'uv tool install jupyterlab'" install_python_tools
+  else
+    info "skipped python tooling"
+    record_skip "python tooling"
+  fi
+
+  if have code; then
+    if section_confirm "Install VSCode extensions from the Brewfile list?"; then
+      tracked_step "vscode extensions" "run with VSCode installed; re-run" install_vscode_extensions
+    else
+      info "skipped vscode extensions"
+      record_skip "vscode extensions"
+    fi
+  fi
+
   set_default_shell
 
-  log "system ready."
-  if [ "$(current_login_shell)" != "${SHELL:-}" ]; then
-    log "note: open a new terminal session to use $SHELL_CHOICE"
-  fi
+  print_summary
 }
 
 main "$@"
