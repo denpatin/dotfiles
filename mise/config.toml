@@ -1,4 +1,5 @@
 [tools]
+heroku = "latest"
 rebar = "latest"
 rust = "stable"
 
@@ -18,4 +19,3 @@ nim = "2.2"
 odin = "latest"
 tinygo = "0.41"
 zig = "0.16"
-heroku = "latest"
