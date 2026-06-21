@@ -21,12 +21,14 @@ if command -v rv >/dev/null 2>&1; then
 fi
 
 alias cat="bat"
+alias df="duf"
+alias du="dust"
 alias find="fd"
 alias grep="rg"
 alias la="eza -lah --icons=auto --git"
-alias lg="lazygit"
 alias ll="eza -lh --icons=auto --git"
 alias ls="eza --icons=auto"
+alias ps="procs"
 alias tree="eza --tree --icons=auto"
 command -v syswatch >/dev/null 2>&1 && alias top="syswatch"
 
@@ -169,4 +171,16 @@ if [[ -d /opt/homebrew/opt/llvm ]]; then
   export CXX="/opt/homebrew/opt/llvm/bin/clang++"
   export LDFLAGS="-L/opt/homebrew/opt/llvm/lib $LDFLAGS"
   export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+fi
+
+for ccache_dir in /opt/homebrew/opt/ccache/libexec /usr/lib/ccache/bin /usr/lib/ccache /usr/lib64/ccache; do
+  if [[ -d "$ccache_dir" ]]; then
+    export PATH="$ccache_dir:$PATH"
+    break
+  fi
+done
+unset ccache_dir
+
+if command -v sccache >/dev/null 2>&1; then
+  export RUSTC_WRAPPER=sccache
 fi

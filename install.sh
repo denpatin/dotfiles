@@ -246,29 +246,51 @@ setup_native_makepkg() {
   [ "$ARCH" = x86_64 ] || return 0
   local conf=/etc/makepkg.conf
   [ -f "$conf" ] || return 0
-  if grep -q '^CFLAGS=.*-march=native' "$conf" 2>/dev/null; then
-    ok "makepkg already builds with -march=native"
+  local need_march=1 need_ccache=1 need_makeflags=1
+  grep -q '^CFLAGS=.*-march=native' "$conf" 2>/dev/null && need_march=0
+  grep -qE '^BUILDENV=.*[^!]ccache' "$conf" 2>/dev/null && need_ccache=0
+  grep -qE '^MAKEFLAGS=.*-j' "$conf" 2>/dev/null && need_makeflags=0
+  if [ "$need_march" = 0 ] && [ "$need_ccache" = 0 ] && [ "$need_makeflags" = 0 ]; then
+    ok "makepkg already tuned (-march=native, ccache, parallel make)"
     return 0
   fi
-  confirm "tune /etc/makepkg.conf to compile AUR/local builds with -march=native?" || {
-    info "skipped makepkg native tuning"
+  confirm "tune /etc/makepkg.conf (-march=native + ccache + parallel make) for faster CPU-optimized builds?" || {
+    info "skipped makepkg tuning"
     return 0
   }
-  log "tuning makepkg.conf for -march=native..."
+  log "tuning makepkg.conf..."
   sudo cp -n "$conf" "$conf.dotfiles.bak" 2>/dev/null || true
-  if grep -qE '^CFLAGS=.*-march=' "$conf"; then
-    sudo sed -i -E 's/-march=[a-z0-9-]+/-march=native/g; s/-mtune=[a-z0-9-]+/-mtune=native/g' "$conf"
-  else
-    {
-      echo ''
-      echo 'CFLAGS="-march=native -mtune=native -O2 -pipe -fno-plt"'
-      echo 'CXXFLAGS="$CFLAGS"'
-    } | sudo tee -a "$conf" >/dev/null
+  if [ "$need_march" = 1 ]; then
+    if grep -qE '^CFLAGS=.*-march=' "$conf"; then
+      sudo sed -i -E 's/-march=[a-z0-9-]+/-march=native/g; s/-mtune=[a-z0-9-]+/-mtune=native/g' "$conf"
+    else
+      {
+        echo ''
+        echo 'CFLAGS="-march=native -mtune=native -O2 -pipe -fno-plt"'
+        echo 'CXXFLAGS="$CFLAGS"'
+      } | sudo tee -a "$conf" >/dev/null
+    fi
+    grep -q 'target-cpu=native' "$conf" 2>/dev/null \
+      || echo 'RUSTFLAGS="-C target-cpu=native"' | sudo tee -a "$conf" >/dev/null
   fi
-  if ! grep -q 'target-cpu=native' "$conf" 2>/dev/null; then
-    echo 'RUSTFLAGS="-C target-cpu=native"' | sudo tee -a "$conf" >/dev/null
+  if [ "$need_ccache" = 1 ]; then
+    pac_install ccache
+    if grep -qE '^BUILDENV=' "$conf"; then
+      sudo sed -i -E 's/!ccache/ccache/' "$conf"
+      grep -qE '^BUILDENV=.*ccache' "$conf" \
+        || sudo sed -i -E 's/^BUILDENV=\((.*)\)/BUILDENV=(\1 ccache)/' "$conf"
+    else
+      echo 'BUILDENV=(!distcc color ccache check !sign)' | sudo tee -a "$conf" >/dev/null
+    fi
   fi
-  ok "makepkg now compiles local builds with -march=native"
+  if [ "$need_makeflags" = 1 ]; then
+    if grep -qE '^#?MAKEFLAGS=' "$conf"; then
+      sudo sed -i -E 's/^#?MAKEFLAGS=.*/MAKEFLAGS="-j$(nproc)"/' "$conf"
+    else
+      echo 'MAKEFLAGS="-j$(nproc)"' | sudo tee -a "$conf" >/dev/null
+    fi
+  fi
+  ok "makepkg tuned: -march=native, ccache, parallel make"
 }
 
 setup_paru() {
@@ -871,7 +893,7 @@ print_status() {
   done
   printf '  cli tools (via mise):\n'
   local tool
-  for tool in mise bat fd fzf rg eza delta zoxide lazygit nvim shellcheck uv yq jq just tre mdt spf; do
+  for tool in mise bat fd fzf rg eza delta zoxide nvim shellcheck uv yq jq just tre mdt spf dust duf procs sd hyperfine sccache; do
     if have "$tool"; then ok "$tool"; else miss "$tool — will be installed by mise"; fi
   done
   printf '  optional programs:\n'
@@ -976,9 +998,9 @@ link_dotfiles() {
 
   mkdir -p "$HOME/.config/mise"
   ln -sf "$DOTFILES_DIR/mise/config.toml" "$HOME/.config/mise/config.toml"
-  mkdir -p "$HOME/.config/mise/conf.d"
-  ln -sf "$DOTFILES_DIR/mise/cargo.toml" "$HOME/.config/mise/conf.d/cargo.toml"
+  rm -f "$HOME/.config/mise/conf.d/cargo.toml"
   if [ "$OS" != macos ]; then
+    mkdir -p "$HOME/.config/mise/conf.d"
     ln -sf "$DOTFILES_DIR/mise/linux.toml" "$HOME/.config/mise/conf.d/linux.toml"
   fi
 

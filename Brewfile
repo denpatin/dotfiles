@@ -34,6 +34,10 @@ brew "container"
 brew "coreutils"
 # Static analysis of C and C++ code
 brew "cppcheck"
+# Disk Usage/Free Utility - a better 'df' alternative
+brew "duf"
+# More intuitive version of du in rust
+brew "dust"
 # Perl lib for reading and writing EXIF metadata
 brew "exiftool"
 # Modern, maintained replacement for ls
@@ -60,6 +64,8 @@ brew "github-markdown-toc"
 brew "gnupg"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
+# Command-line benchmarking tool
+brew "hyperfine"
 # Verilog simulation and synthesis tool
 brew "icarus-verilog"
 # Generic library support script
@@ -100,6 +106,8 @@ brew "overmind"
 brew "pgcli"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
+# Modern replacement for ps written in Rust
+brew "procs"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Ruby autoformatter
@@ -108,6 +116,10 @@ brew "rubyfmt"
 brew "rv"
 # Safe string operations and memory routines
 brew "safestringlib"
+# Used as a compiler wrapper and avoids compilation when possible
+brew "sccache"
+# Intuitive find & replace CLI
+brew "sd"
 # Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
 # Modern and pretty fancy file manager for the terminal

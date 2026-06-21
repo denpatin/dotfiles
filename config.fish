@@ -17,12 +17,14 @@ if type -q rv
 end
 
 alias cat="bat"
+alias df="duf"
+alias du="dust"
 alias find="fd"
 alias grep="rg"
 alias la="eza -lah --icons=auto --git"
-alias lg="lazygit"
 alias ll="eza -lh --icons=auto --git"
 alias ls="eza --icons=auto"
+alias ps="procs"
 alias tree="eza --tree --icons=auto"
 if type -q syswatch
     alias top="syswatch"
@@ -184,3 +186,15 @@ if test -d /opt/homebrew/opt/llvm
 end
 
 fish_add_path "$HOME/.local/bin"
+
+for ccache_dir in /opt/homebrew/opt/ccache/libexec /usr/lib/ccache/bin /usr/lib/ccache /usr/lib64/ccache
+    if test -d $ccache_dir
+        fish_add_path --prepend --global $ccache_dir
+        break
+    end
+end
+set -e ccache_dir
+
+if type -q sccache
+    set -gx RUSTC_WRAPPER sccache
+end
