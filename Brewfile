@@ -14,8 +14,12 @@ brew "autoconf"
 brew "automake"
 # Official Amazon AWS command-line interface
 brew "awscli"
+# Background rust code check
+brew "bacon"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Object-file caching compiler wrapper
+brew "ccache"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
 # Core component of the AcoustID project (Audio fingerprinting)
@@ -36,6 +40,8 @@ brew "exiftool"
 brew "eza"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
+# LLVM's OpenMP runtime library
+brew "libomp"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
 # Command-line fuzzy finder written in Go
@@ -52,12 +58,12 @@ brew "git-delta"
 brew "github-markdown-toc"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
 # Verilog simulation and synthesis tool
 brew "icarus-verilog"
 # Generic library support script
 brew "libtool"
-# Tools and libraries to manipulate images in select formats
-brew "imagemagick"
 # Next-gen compiler infrastructure
 brew "llvm"
 # Tool to analyze #includes in C and C++ source files
@@ -70,8 +76,6 @@ brew "just"
 brew "latexdiff"
 # Add indentation to LaTeX files
 brew "latexindent"
-# LLVM's OpenMP runtime library
-brew "libomp"
 # LLVM Project Linker
 brew "lld"
 # Mac App Store command-line interface
@@ -88,10 +92,14 @@ brew "ninja"
 brew "ollama"
 # Universal utility for programming FPGA
 brew "openfpgaloader"
+# Terminal multiplexer
+brew "tmux"
+# Process manager for Procfile-based applications and tmux
+brew "overmind"
+# CLI for Postgres with auto-completion and syntax highlighting
+brew "pgcli"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
-# Package compiler and linker metadata toolkit
-brew "pkgconf"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Ruby autoformatter
@@ -116,10 +124,14 @@ brew "tree"
 brew "uv"
 # Verilog simulator
 brew "verilator"
+# Image processing library
+brew "vips"
 # Framework for Verilog RTL synthesis
 brew "yosys"
 # Process YAML, JSON, XML, CSV and properties documents from the CLI
 brew "yq"
+# Pluggable terminal workspace, with terminal multiplexer as the base feature
+brew "zellij"
 # General-purpose lossless data-compression library
 brew "zlib"
 # Shell extension to navigate your filesystem faster
@@ -141,6 +153,8 @@ cask "github-copilot-app"
 cask "google-drive"
 # JetBrains tools manager
 cask "jetbrains-toolbox"
+# Clipboard manager
+cask "maccy"
 # Full TeX Live distribution without GUI applications
 cask "mactex-no-gui"
 # Minimal installer for conda specific to conda-forge
@@ -235,5 +249,6 @@ vscode "yasuo-higano.prolog-syntax"
 vscode "ziglang.vscode-zig"
 go "cmd/go"
 go "cmd/gofmt"
+cargo "tre"
 uv "jupyterlab"
 npm "corepack"
