@@ -110,6 +110,8 @@ brew "swi-prolog"
 brew "syswatch"
 # Modernized, complete, self-contained TeX/LaTeX engine
 brew "tectonic"
+# Lightweight, POSIX-compliant regular expression (regex) library
+brew "tre"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Extremely fast Python package installer and resolver, written in Rust
