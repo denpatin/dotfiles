@@ -128,7 +128,7 @@ sync_dots() {
   local msg="${1:-"Update dotfiles"}"
   pushd "$DOTFILES_DIR" >/dev/null || return 1
   if command -v brew >/dev/null 2>&1; then
-    brew bundle dump --force --no-lock --file="Brewfile" >/dev/null 2>&1
+    brew bundle dump --force --file="Brewfile" >/dev/null 2>&1
   fi
 
   git add -A
