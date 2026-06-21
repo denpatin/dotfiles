@@ -871,7 +871,7 @@ print_status() {
   done
   printf '  cli tools (via mise):\n'
   local tool
-  for tool in mise bat fd fzf rg eza delta zoxide lazygit nvim shellcheck uv yq; do
+  for tool in mise bat fd fzf rg eza delta zoxide lazygit nvim shellcheck uv yq jq just tre mdt spf; do
     if have "$tool"; then ok "$tool"; else miss "$tool — will be installed by mise"; fi
   done
   printf '  optional programs:\n'
@@ -976,8 +976,9 @@ link_dotfiles() {
 
   mkdir -p "$HOME/.config/mise"
   ln -sf "$DOTFILES_DIR/mise/config.toml" "$HOME/.config/mise/config.toml"
+  mkdir -p "$HOME/.config/mise/conf.d"
+  ln -sf "$DOTFILES_DIR/mise/cargo.toml" "$HOME/.config/mise/conf.d/cargo.toml"
   if [ "$OS" != macos ]; then
-    mkdir -p "$HOME/.config/mise/conf.d"
     ln -sf "$DOTFILES_DIR/mise/linux.toml" "$HOME/.config/mise/conf.d/linux.toml"
   fi
 
