@@ -8,6 +8,8 @@ brew "openssl@3"
 brew "arxiv_latex_cleaner"
 # Code searching, linting, rewriting
 brew "ast-grep"
+# Simple API client (Postman-like) in your terminal
+brew "atac"
 # Automatic configure script builder
 brew "autoconf"
 # Tool for generating GNU Standards-compliant Makefiles
@@ -16,10 +18,16 @@ brew "automake"
 brew "awscli"
 # Background rust code check
 brew "bacon"
+# Terminal bandwidth utilization tool
+brew "bandwhich"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# New way to see and navigate directory trees
+brew "broot"
 # Object-file caching compiler wrapper
 brew "ccache"
+# Human-friendly and fast alternative to cut and (sometimes) awk
+brew "choose-rust"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
 # Core component of the AcoustID project (Audio fingerprinting)
@@ -34,6 +42,10 @@ brew "container"
 brew "coreutils"
 # Static analysis of C and C++ code
 brew "cppcheck"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
+# Duplicate file utility
+brew "czkawka"
 # Disk Usage/Free Utility - a better 'df' alternative
 brew "duf"
 # More intuitive version of du in rust
@@ -62,8 +74,10 @@ brew "git-delta"
 brew "github-markdown-toc"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
-# Package compiler and linker metadata toolkit
-brew "pkgconf"
+# Command-line tool for generating regular expressions
+brew "grex"
+# Run and Test HTTP Requests with plain text and curl
+brew "hurl"
 # Command-line benchmarking tool
 brew "hyperfine"
 # Verilog simulation and synthesis tool
@@ -74,6 +88,14 @@ brew "libtool"
 brew "llvm"
 # Tool to analyze #includes in C and C++ source files
 brew "include-what-you-use"
+# JQ clone focussed on correctness, speed, and simplicity
+brew "jaq"
+# Git-compatible distributed version control system
+brew "jj"
+# Command-line pager for JSON data
+brew "jless"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
 # Handy way to save and run project-specific commands
 brew "just"
 # Compare and mark up LaTeX file differences
@@ -106,6 +128,10 @@ brew "pgcli"
 brew "pinentry-mac"
 # Modern replacement for ps written in Rust
 brew "procs"
+# Ultra-fast CSV data-wrangling toolkit
+brew "qsv"
+# Sampling profiler for Ruby
+brew "rbspy"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Ruby autoformatter
@@ -114,12 +140,18 @@ brew "rubyfmt"
 brew "rv"
 # Safe string operations and memory routines
 brew "safestringlib"
+# Fast and accurate code counter with complexity and COCOMO estimates
+brew "scc"
 # Used as a compiler wrapper and avoids compilation when possible
 brew "sccache"
 # Intuitive find & replace CLI
 brew "sd"
 # Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
+# Cross-shell prompt for astronauts
+brew "starship"
+# Modern and pretty fancy file manager for the terminal
+brew "superfile"
 # ISO/Edinburgh-style Prolog interpreter
 brew "swi-prolog"
 # Cross-platform system diagnostics TUI
@@ -128,12 +160,20 @@ brew "syswatch"
 brew "tectonic"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Markup-based typesetting system
+brew "typst"
+# Ultra fast grep with query UI, fuzzy search, archive search, and more
+brew "ugrep"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
 # Verilog simulator
 brew "verilator"
 # Image processing library
 brew "vips"
+# Execute commands when watched files change
+brew "watchexec"
+# Blazing fast terminal file manager written in Rust, based on async I/O
+brew "yazi"
 # Framework for Verilog RTL synthesis
 brew "yosys"
 # Process YAML, JSON, XML, CSV and properties documents from the CLI
@@ -144,47 +184,11 @@ brew "zellij"
 brew "zlib"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
-# Terminal API client (Postman-like TUI)
-brew "atac"
-# Terminal bandwidth utilization monitor
-brew "bandwhich"
-# New file manager and tree explorer
-brew "broot"
-# Human-friendly alternative to cut and awk field selection
-brew "choose-rust"
-# Multi functional app to find duplicates and clean disk space
-brew "czkawka"
-# Generate regular expressions from user-provided test cases
-brew "grex"
-# Run and test HTTP requests with plain text
-brew "hurl"
-# A jq clone focused on correctness, speed, and simplicity
-brew "jaq"
-# Command-line pager for JSON data
-brew "jless"
-# Git-compatible distributed version control system
-brew "jujutsu"
-# Sampling profiler for Ruby programs
-brew "rbspy"
-# CSV data-wrangling toolkit (jq/yq for tabular data)
-brew "qsv"
-# Count lines of code with optional complexity metrics
-brew "scc"
-# Cross-shell prompt for astronauts
-brew "starship"
-# Markup-based typesetting system
-brew "typst"
-# Ultra-fast grep-compatible search tool
-brew "ugrep"
-# Execute commands when watched files change
-brew "watchexec"
-# Blazing fast terminal file manager written in Rust
-brew "yazi"
 # Android SDK component
 cask "android-platform-tools"
 # Web browser focusing on privacy
 cask "brave-browser"
-# Open source API client
+# Open source IDE for exploring and testing APIs
 cask "bruno"
 # Two-panel file manager
 cask "commander-one"
@@ -296,5 +300,6 @@ vscode "yasuo-higano.prolog-syntax"
 vscode "ziglang.vscode-zig"
 go "cmd/go"
 go "cmd/gofmt"
+cargo "tre"
 uv "jupyterlab"
 npm "corepack"
