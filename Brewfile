@@ -86,6 +86,8 @@ brew "neovim"
 brew "ninja"
 # Create, run, and share large language models (LLMs)
 brew "ollama"
+# Universal utility for programming FPGA
+brew "openfpgaloader"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
 # Package compiler and linker metadata toolkit
@@ -133,6 +135,8 @@ cask "font-jetbrains-mono"
 cask "fuse-t"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Native client for GitHub Copilot
+cask "github-copilot-app"
 # Client for the Google Drive storage service
 cask "google-drive"
 # JetBrains tools manager
