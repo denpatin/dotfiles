@@ -165,14 +165,14 @@ choose_shell() {
     case "$SHELL_CHOICE" in zsh | fish) return 0 ;; *) die "invalid SHELL_CHOICE: $SHELL_CHOICE" ;; esac
   fi
   if [ "$INTERACTIVE" != 1 ]; then
-    SHELL_CHOICE=zsh
+    SHELL_CHOICE=fish
     log "shell: $SHELL_CHOICE (default, non-interactive)"
     return 0
   fi
   local answer
-  printf '\nshell to configure [zsh/fish] (default zsh): '
+  printf '\nshell to configure [fish/zsh] (default fish): '
   read -r answer </dev/tty || answer=""
-  answer="${answer:-zsh}"
+  answer="${answer:-fish}"
   case "$answer" in
     zsh | fish) SHELL_CHOICE="$answer" ;;
     *) die "invalid shell: $answer" ;;
@@ -311,6 +311,43 @@ setup_paru() {
   have paru && AUR_HELPER=paru
 }
 
+cachyos_core_tools() {
+  printf '%s\n' ripgrep bat fd eza zoxide git-delta neovim ugrep fzf just \
+    dust duf sd hyperfine starship zellij jaq yazi watchexec typst
+}
+
+write_cachyos_mise_overlay() {
+  local conf="$HOME/.config/mise/conf.d/cachyos.toml"
+  mkdir -p "$HOME/.config/mise/conf.d"
+  local t names=()
+  for t in "$@"; do
+    case "$t" in
+      ugrep) ;;
+      git-delta) names+=(delta) ;;
+      *) names+=("$t") ;;
+    esac
+  done
+  if [ "${#names[@]}" -eq 0 ]; then rm -f "$conf"; return 0; fi
+  local list
+  list="$(printf '"%s", ' "${names[@]}")"
+  printf '[settings]\ndisable_tools = [%s]\n' "${list%, }" >"$conf"
+  ok "mise will defer ${#names[@]} core tools to optimized system packages"
+}
+
+install_cachyos_core() {
+  [ "$OS" = cachyos ] && [ "$ARCH" = x86_64 ] || return 0
+  if ! confirm "install core CLI tools from CachyOS x86-64-${ISA_LEVEL} optimized repos (so mise won't ship generic binaries)?"; then
+    info "skipped cachyos optimized core tools"
+    return 0
+  fi
+  log "installing CPU-optimized core tools via pacman..."
+  local p installed=()
+  while IFS= read -r p; do
+    if pac_install "$p"; then installed+=("$p"); else warn "pacman could not install $p; mise will handle it"; fi
+  done < <(cachyos_core_tools)
+  write_cachyos_mise_overlay "${installed[@]}"
+}
+
 install_homebrew() {
   if ! have brew; then
     log "installing homebrew..."
@@ -355,6 +392,7 @@ install_base_debian() {
       warn "git-core ppa unavailable, using distro git"
   fi
   sudo locale-gen en_US.UTF-8
+  apt_install ugrep || warn "ugrep unavailable via apt; system grep stays in use"
   install_nerd_font_manual
 }
 
@@ -364,7 +402,7 @@ install_base_arch() {
   log "installing base packages..."
   pac_install \
     base-devel clang llvm lld gcc gdb cmake pkgconf \
-    git curl wget unzip zip tree \
+    git curl wget unzip zip tree ugrep \
     openssl ncurses readline libyaml zlib libffi \
     fontconfig ttf-jetbrains-mono ttf-jetbrains-mono-nerd
   if ! grep -q '^en_US.UTF-8 UTF-8' /etc/locale.gen; then
@@ -386,6 +424,7 @@ install_base_rhel() {
     git curl wget ca-certificates gnupg2 unzip zip tree \
     openssl-devel ncurses-devel readline-devel libyaml-devel zlib-devel libffi-devel \
     fontconfig
+  dnf_install ugrep || warn "ugrep unavailable via dnf; system grep stays in use"
   install_nerd_font_manual
 }
 
@@ -407,7 +446,7 @@ install_base_nixos() {
   warn "NixOS detected: this performs a best-effort imperative (nix profile) setup."
   info "For system packages and GUI apps prefer configuration.nix / home-manager."
   command -v nix >/dev/null 2>&1 || die "nix command not found"
-  nix_install git gcc gnumake binutils pkg-config fontconfig nerd-fonts.jetbrains-mono
+  nix_install git gcc gnumake binutils pkg-config fontconfig nerd-fonts.jetbrains-mono ugrep
 }
 
 install_shell_pkg() {
@@ -692,6 +731,32 @@ prog_google_drive() {
   esac
 }
 
+prog_czkawka() {
+  have czkawka_cli && { ok "czkawka already installed"; return 0; }
+  log "installing czkawka..."
+  if [ "$DISTRO_FAMILY" = arch ]; then
+    aur_install czkawka-cli && return 0
+  fi
+  local tmp asset
+  tmp="$(mktemp -d)"
+  asset="$(curl -fsSL https://api.github.com/repos/qarmin/czkawka/releases/latest 2>/dev/null \
+    | grep '"browser_download_url"' | cut -d'"' -f4 \
+    | grep -iE 'linux.*czkawka_cli' | grep -vi musl | head -n1)"
+  if [ -n "$asset" ]; then
+    if curl -fsSL "$asset" -o "$tmp/czkawka_cli"; then
+      chmod +x "$tmp/czkawka_cli"
+      mkdir -p "$HOME/.local/bin"
+      mv "$tmp/czkawka_cli" "$HOME/.local/bin/czkawka_cli"
+      ok "czkawka_cli installed to ~/.local/bin"
+    else
+      warn "czkawka download failed; skipping"
+    fi
+  else
+    warn "no czkawka_cli release asset for this platform; skipping"
+  fi
+  rm -rf "$tmp"
+}
+
 prog_intel_undervolt() {
   if [ "$CPU_VENDOR" != GenuineIntel ]; then
     info "non-Intel CPU ($CPU_VENDOR), skipping intel-undervolt"
@@ -784,6 +849,7 @@ swi_prolog|SWI-Prolog|off
 ngrok|ngrok tunneling|off
 jetbrains_toolbox|JetBrains Toolbox|off
 google_drive|Google Drive (alternatives info)|off
+czkawka|czkawka duplicate and space cleaner (czkawka_cli)|on
 EOF
   if [ "$CPU_VENDOR" = GenuineIntel ]; then
     echo 'intel_undervolt|intel-undervolt + power limits 30/8 22/10|on'
@@ -832,6 +898,7 @@ comp_status() {
     ngrok) _ver ngrok --version ;;
     jetbrains_toolbox) { [ -x "$HOME/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox" ] || have jetbrains-toolbox; } && echo installed ;;
     intel_undervolt) have intel-undervolt && echo installed ;;
+    czkawka) have czkawka_cli && echo installed ;;
     google_drive) return 1 ;;
     *) return 1 ;;
   esac
@@ -855,6 +922,7 @@ comp_install() {
     jetbrains_toolbox) prog_jetbrains_toolbox ;;
     google_drive) prog_google_drive ;;
     intel_undervolt) prog_intel_undervolt ;;
+    czkawka) prog_czkawka ;;
   esac
 }
 
@@ -893,8 +961,14 @@ print_status() {
   done
   printf '  cli tools (via mise):\n'
   local tool
-  for tool in mise bat fd fzf rg eza delta zoxide nvim shellcheck uv yq jq just tre mdt spf dust duf procs sd hyperfine sccache; do
-    if have "$tool"; then ok "$tool"; else miss "$tool — will be installed by mise"; fi
+  for tool in mise bat fd fzf rg ugrep eza delta zoxide nvim shellcheck uv yq jaq just mdt dust duf procs sd hyperfine sccache choose jless jj broot starship bandwhich yazi scc grex watchexec qsv typst hurl rbspy atac zellij; do
+    if have "$tool"; then
+      ok "$tool"
+    elif [ "$tool" = ugrep ]; then
+      miss "$tool — will be installed from system packages"
+    else
+      miss "$tool — will be installed by mise"
+    fi
   done
   printf '  optional programs:\n'
   local k l
@@ -1007,6 +1081,13 @@ link_dotfiles() {
   mkdir -p "$HOME/.config"
   ln -sfn "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
   ln -sfn "$DOTFILES_DIR/ghostty" "$HOME/.config/ghostty"
+  ln -sfn "$DOTFILES_DIR/zellij" "$HOME/.config/zellij"
+  ln -sf "$DOTFILES_DIR/starship.toml" "$HOME/.config/starship.toml"
+
+  if [ "$OS" != macos ]; then
+    mkdir -p "$HOME/.cargo"
+    ln -sf "$DOTFILES_DIR/cargo/config.toml" "$HOME/.cargo/config.toml"
+  fi
 
   mkdir -p "$HOME/.ssh"
   ln -sf "$DOTFILES_DIR/ssh/config" "$HOME/.ssh/config"
@@ -1112,6 +1193,7 @@ install_linux() {
         if [ "$ARCH" = x86_64 ]; then setup_cachyos_repos; fi
         setup_paru
         run_step "base packages" install_base_arch
+        install_cachyos_core
         ;;
       rhel) run_step "base packages" install_base_rhel ;;
       nixos) run_step "base packages" install_base_nixos ;;
@@ -1137,8 +1219,8 @@ install_linux() {
 
 usage() {
   cat <<EOF
-Usage: install.sh [--shell zsh|fish] [--yes] [--upgrade] [--status]
-  --shell    Pick shell non-interactively (zsh or fish).
+Usage: install.sh [--shell fish|zsh] [--yes] [--upgrade] [--status]
+  --shell    Pick shell non-interactively (fish or zsh; default fish).
   --yes,-y   Accept defaults, no prompts (non-interactive).
   --upgrade  Also re-run installers for already-installed non-repo tools.
   --status   Only print what is installed vs missing, then exit (Linux).

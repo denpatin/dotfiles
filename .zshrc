@@ -5,9 +5,17 @@ export LC_ALL="en_US.UTF-8"
 export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="robbyrussell"
+ZSH_THEME=""
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 source "$ZSH/oh-my-zsh.sh"
+
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi
+
+if command -v broot >/dev/null 2>&1; then
+  source <(broot --print-shell-function zsh)
+fi
 
 if [[ -x /opt/homebrew/bin/brew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -24,12 +32,13 @@ alias cat="bat"
 alias df="duf"
 alias du="dust"
 alias find="fd"
-alias grep="rg"
+alias jq="jaq"
 alias la="eza -lah --icons=auto --git"
 alias ll="eza -lh --icons=auto --git"
 alias ls="eza --icons=auto"
 alias ps="procs"
 alias tree="eza --tree --icons=auto"
+command -v ugrep >/dev/null 2>&1 && alias grep="ugrep -G"
 command -v syswatch >/dev/null 2>&1 && alias top="syswatch"
 
 if command -v brew >/dev/null 2>&1; then
@@ -149,6 +158,16 @@ vois() {
   ruby -v
   git status -sb
   git fetch origin --quiet
+}
+
+yy() {
+  local tmp cwd
+  tmp="$(mktemp -t yazi-cwd.XXXXXX)"
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
 }
 
 ze() {

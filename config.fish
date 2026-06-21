@@ -16,16 +16,27 @@ if type -q rv
     rv shell init fish | source
 end
 
+if type -q starship
+    starship init fish | source
+end
+
+if type -q broot
+    source (broot --print-shell-function fish | psub)
+end
+
 alias cat="bat"
 alias df="duf"
 alias du="dust"
 alias find="fd"
-alias grep="rg"
+alias jq="jaq"
 alias la="eza -lah --icons=auto --git"
 alias ll="eza -lh --icons=auto --git"
 alias ls="eza --icons=auto"
 alias ps="procs"
 alias tree="eza --tree --icons=auto"
+if type -q ugrep
+    alias grep="ugrep -G"
+end
 if type -q syswatch
     alias top="syswatch"
 end
@@ -95,26 +106,16 @@ function fe
     end
 end
 
-function fish_prompt
-    set -l pwd (string replace -r '^'"$HOME" '~' (pwd))
-    set -l split_path (string split '/' $pwd)
-    if test (count $split_path) -gt 3
-        if test "$split_path[1]" = "~"
-            set pwd (string join '/' "~" ".." $split_path[-2] $split_path[-1])
-        else
-            set pwd (string join '/' ".." $split_path[-2] $split_path[-1])
+function yy
+    set -l tmp (mktemp -t yazi-cwd.XXXXXX)
+    yazi $argv --cwd-file="$tmp"
+    if test -f "$tmp"
+        set -l cwd (command cat -- "$tmp")
+        if test -n "$cwd"; and test "$cwd" != "$PWD"
+            builtin cd -- "$cwd"
         end
     end
-    set_color cyan
-    echo -n $pwd
-    set_color normal
-    if type -q fish_git_prompt
-        set -g __fish_git_prompt_char_stateseparator ' '
-        set_color magenta
-        fish_git_prompt " (%s)"
-    end
-    set_color normal
-    echo -n '> '
+    rm -f -- "$tmp"
 end
 
 function gcl

@@ -74,8 +74,6 @@ brew "libtool"
 brew "llvm"
 # Tool to analyze #includes in C and C++ source files
 brew "include-what-you-use"
-# Lightweight and flexible command-line JSON processor
-brew "jq"
 # Handy way to save and run project-specific commands
 brew "just"
 # Compare and mark up LaTeX file differences
@@ -122,8 +120,6 @@ brew "sccache"
 brew "sd"
 # Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
-# Modern and pretty fancy file manager for the terminal
-brew "superfile"
 # ISO/Edinburgh-style Prolog interpreter
 brew "swi-prolog"
 # Cross-platform system diagnostics TUI
@@ -148,10 +144,48 @@ brew "zellij"
 brew "zlib"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+# Terminal API client (Postman-like TUI)
+brew "atac"
+# Terminal bandwidth utilization monitor
+brew "bandwhich"
+# New file manager and tree explorer
+brew "broot"
+# Human-friendly alternative to cut and awk field selection
+brew "choose-rust"
+# Multi functional app to find duplicates and clean disk space
+brew "czkawka"
+# Generate regular expressions from user-provided test cases
+brew "grex"
+# Run and test HTTP requests with plain text
+brew "hurl"
+# A jq clone focused on correctness, speed, and simplicity
+brew "jaq"
+# Command-line pager for JSON data
+brew "jless"
+# Git-compatible distributed version control system
+brew "jujutsu"
+# Sampling profiler for Ruby programs
+brew "rbspy"
+# CSV data-wrangling toolkit (jq/yq for tabular data)
+brew "qsv"
+# Count lines of code with optional complexity metrics
+brew "scc"
+# Cross-shell prompt for astronauts
+brew "starship"
+# Markup-based typesetting system
+brew "typst"
+# Ultra-fast grep-compatible search tool
+brew "ugrep"
+# Execute commands when watched files change
+brew "watchexec"
+# Blazing fast terminal file manager written in Rust
+brew "yazi"
 # Android SDK component
 cask "android-platform-tools"
 # Web browser focusing on privacy
 cask "brave-browser"
+# Open source API client
+cask "bruno"
 # Two-panel file manager
 cask "commander-one"
 cask "font-jetbrains-mono"
@@ -244,6 +278,7 @@ vscode "ms-vscode.cpptools"
 vscode "ms-vscode.cpptools-extension-pack"
 vscode "ms-vscode.cpptools-themes"
 vscode "ms-vscode.makefile-tools"
+vscode "myriad-dreamin.tinymist"
 vscode "narasimapandiyan.jetbrainsmono"
 vscode "njpwerner.autodocstring"
 vscode "pgourlain.erlang"
@@ -261,6 +296,5 @@ vscode "yasuo-higano.prolog-syntax"
 vscode "ziglang.vscode-zig"
 go "cmd/go"
 go "cmd/gofmt"
-cargo "tre"
 uv "jupyterlab"
 npm "corepack"

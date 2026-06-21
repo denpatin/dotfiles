@@ -74,6 +74,12 @@
   ],
   "latex-workshop.view.pdf.viewer": "tab",
   "latex-workshop.synctex.afterBuild.enabled": true,
+  "[typst]": {
+    "editor.defaultFormatter": "myriad-dreamin.tinymist",
+    "editor.formatOnSave": true
+  },
+  "tinymist.formatterMode": "typstyle",
+  "tinymist.exportPdf": "onSave",
   "editor.fontFamily": "'JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 12,
