@@ -124,6 +124,30 @@ NB: `ripgrep` stays separate for ad-hoc fast search, tho.
 - API testing -- `xh`, `hurl`, `atac`, `Bruno`
 - Typesetting -- `Typst` + TeX Live (`latexmk`, `biber`, `chktex`)
 
+## Languages & Ecosystems
+
+- C (`gcc-16`, `clang` 22) -- C17 (+23)
+- C++ (`g++-16`, `clang++` 22) -- C++20 (+23/26)
+- Clojure (`Leiningen`, `babashka`)
+- Crystal
+- Elixir (`mix`)
+- Erlang (`rebar`)
+- Fortran (`gfortran`, `fpm`)
+- Gleam
+- Go (+ TinyGo)
+- JS/TS (`Node`, `Bun`)
+- Julia
+- Nim
+- Odin
+- Prolog (`SWI-Prolog`)
+- Python (`uv`)
+- Ruby (`rv`)
+- Rust (`cargo`)
+- Zig
+
+NB: `MacOS`: bare `gcc`/`cc` are Apple `clang`; GNU GCC is the `-16` suffix; bare
+`clang` is `Homebrew` `llvm` 22. All route through the `ccache` shim on `PATH`.
+
 ## GUI Apps & Casks
 
 - Dev -- `VS Code`, `Sublime Text`, `OrbStack`, `JetBrains Toolbox`,

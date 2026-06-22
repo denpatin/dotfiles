@@ -60,10 +60,12 @@ brew "fd"
 brew "libomp"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
-# Command-line fuzzy finder written in Go
-brew "fzf"
 # GNU compiler collection
 brew "gcc"
+# Package manager and build system for Fortran
+brew "fpm"
+# Command-line fuzzy finder written in Go
+brew "fzf"
 # Interpreter for PostScript and PDF
 brew "ghostscript"
 # Distributed revision control system
@@ -262,6 +264,7 @@ vscode "eamodio.gitlens"
 vscode "editorconfig.editorconfig"
 vscode "edwinhuish.better-comments-next"
 vscode "enkia.tokyo-night"
+vscode "fortran-lang.linter-gfortran"
 vscode "github.github-vscode-theme"
 vscode "jakebecker.elixir-ls"
 vscode "james-yu.latex-workshop"

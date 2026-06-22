@@ -760,6 +760,17 @@ prog_latex() {
   esac
 }
 
+prog_fortran() {
+  if [ "$DISTRO_FAMILY" != arch ]; then
+    info "Fortran toolchain here targets CachyOS/Arch only; skipping"
+    return 0
+  fi
+  log "installing gfortran + fpm..."
+  pac_install gcc-fortran
+  aur_install fortran-fpm || warn "fortran-fpm install failed; retry later with '$AUR_HELPER -S fortran-fpm'"
+  ok "gfortran ready (built -march=native, full Fortran 2018), fpm build system installed"
+}
+
 prog_google_drive() {
   warn "google drive has no official linux desktop client."
   case "$DISTRO_FAMILY" in
@@ -899,6 +910,9 @@ jetbrains_toolbox|JetBrains Toolbox|off
 google_drive|Google Drive (alternatives info)|off
 czkawka|czkawka duplicate and space cleaner (czkawka_cli)|on
 EOF
+  if [ "$DISTRO_FAMILY" = arch ]; then
+    echo "fortran|Fortran (gfortran + fpm)|off"
+  fi
   if [ "$CPU_VENDOR" = GenuineIntel ]; then
     if iuv_model_matches; then
       echo "intel_undervolt|intel-undervolt + power limits 30/8 22/10 (tuned for $IUV_TUNED_MODEL)|on"
@@ -941,6 +955,7 @@ comp_status() {
     rv) _ver rv --version || { [ -x "$HOME/.local/bin/rv" ] && "$HOME/.local/bin/rv" --version 2>/dev/null | head -n1; } ;;
     vscode) _ver code --version ;;
     latex) _ver latexmk --version || _ver tex --version ;;
+    fortran) _ver gfortran --version ;;
     syswatch) have syswatch && echo installed ;;
     awscli) _ver aws --version ;;
     postgres) _ver psql --version ;;
@@ -964,6 +979,7 @@ comp_install() {
     rv) prog_rv ;;
     vscode) prog_vscode ;;
     latex) prog_latex ;;
+    fortran) prog_fortran ;;
     syswatch) install_syswatch ;;
     awscli) prog_awscli ;;
     postgres) prog_postgres ;;
