@@ -425,8 +425,9 @@ install_base_debian() {
     autoconf automake libtool m4 libssl-dev libncurses-dev libreadline-dev \
     libyaml-dev zlib1g-dev libffi-dev
   if ! apt-cache policy git 2>/dev/null | grep -q git-core; then
-    sudo add-apt-repository -y ppa:git-core/ppa && sudo apt-get update && apt_install git || \
+    if ! { sudo add-apt-repository -y ppa:git-core/ppa && sudo apt-get update && apt_install git; }; then
       warn "git-core ppa unavailable, using distro git"
+    fi
   fi
   sudo locale-gen en_US.UTF-8
   apt_install ugrep || warn "ugrep unavailable via apt; system grep stays in use"
@@ -1115,14 +1116,14 @@ select_optional() {
     read -r input </dev/tty || input=""
     case "$input" in
       "") break ;;
-      a | A) for i in "${!states[@]}"; do states[$i]=on; done ;;
-      n | N) for i in "${!states[@]}"; do states[$i]=off; done ;;
+      a | A) for i in "${!states[@]}"; do states[i]=on; done ;;
+      n | N) for i in "${!states[@]}"; do states[i]=off; done ;;
       *)
         local tok
         for tok in $input; do
           if [[ "$tok" =~ ^[0-9]+$ ]] && [ "$tok" -ge 1 ] && [ "$tok" -le "${#keys[@]}" ]; then
             local idx=$((tok - 1))
-            [ "${states[$idx]}" = on ] && states[$idx]=off || states[$idx]=on
+            [ "${states[idx]}" = on ] && states[idx]=off || states[idx]=on
           fi
         done
         ;;
