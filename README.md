@@ -87,9 +87,10 @@ directory jump `zoxide` (bound to `cd`).
 
 > Only for Linux
 
-`VS Code` + extensions, `LaTeX` (TeX Live) + `Typst`, `syswatch`, `AWS CLI`,
-`PostgreSQL`, `Ollama`, `rubyfmt`, `SWI-Prolog`, `ngrok`, `JetBrains Toolbox`,
-`czkawka`, and (Intel-only!!) `intel-undervolt` (power limits `30/8 22/10`)
+`VS Code` + extensions, `LaTeX` (TeX Live) + `Typst`, `pixi`, `syswatch`,
+`AWS CLI`, `PostgreSQL`, `Ollama`, `rubyfmt`, `SWI-Prolog`, `ngrok`,
+`JetBrains Toolbox`, `czkawka`, and (Intel-only!!) `intel-undervolt`
+(power limits `30/8 22/10`)
 
 ## Replaced Commands
 
@@ -145,8 +146,9 @@ NB: `ripgrep` stays separate for ad-hoc fast search, tho.
 - Rust (`cargo`)
 - Zig
 
-NB: `MacOS`: bare `gcc`/`cc` are Apple `clang`; GNU GCC is the `-16` suffix; bare
-`clang` is `Homebrew` `llvm` 22. All route through the `ccache` shim on `PATH`.
+NB: `MacOS`: bare `gcc`/`cc` are Apple `clang`; GNU GCC is the `-16` suffix;
+bare `clang` is `Homebrew` `llvm` 22. All route through the `ccache` shim on
+`PATH`.
 
 ## GUI Apps & Casks
 

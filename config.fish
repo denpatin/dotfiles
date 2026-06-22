@@ -24,6 +24,10 @@ if type -q broot
     source (broot --print-shell-function fish | psub)
 end
 
+if type -q pixi
+    pixi completion --shell fish | source
+end
+
 alias cat="bat"
 alias df="duf"
 alias du="dust"

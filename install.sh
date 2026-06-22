@@ -637,6 +637,20 @@ prog_ngrok() {
   esac
 }
 
+prog_pixi() {
+  have pixi && return 0
+  log "installing pixi..."
+  case "$DISTRO_FAMILY" in
+    arch) pac_install pixi ;;
+    debian | rhel)
+      curl -fsSL https://pixi.sh/install.sh \
+        | env PIXI_NO_PATH_UPDATE=1 PIXI_BIN_DIR="$HOME/.local/bin" sh \
+        || warn "pixi install failed; retry: curl -fsSL https://pixi.sh/install.sh | sh"
+      ;;
+    nixos) info "add 'pkgs.pixi' to configuration.nix and rebuild" ;;
+  esac
+}
+
 prog_postgres() {
   have psql && return 0
   log "installing postgresql..."
@@ -899,6 +913,7 @@ optional_menu_entries() {
   cat <<'EOF'
 vscode|Visual Studio Code + extensions|on
 latex|Full LaTeX (TeX Live) + latexmk/biber/chktex|on
+pixi|pixi (conda-forge package/env manager)|on
 syswatch|syswatch system monitor (top replacement)|on
 awscli|AWS CLI v2|on
 postgres|PostgreSQL server|off
@@ -963,6 +978,7 @@ comp_status() {
     rubyfmt) have rubyfmt && { rubyfmt --version 2>/dev/null | head -n1 || echo installed; } ;;
     swi_prolog) _ver swipl --version ;;
     ngrok) _ver ngrok --version ;;
+    pixi) _ver pixi --version ;;
     jetbrains_toolbox) { [ -x "$HOME/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox" ] || have jetbrains-toolbox; } && echo installed ;;
     intel_undervolt) have intel-undervolt && echo installed ;;
     czkawka) have czkawka_cli && echo installed ;;
@@ -987,6 +1003,7 @@ comp_install() {
     rubyfmt) prog_rubyfmt ;;
     swi_prolog) prog_swi_prolog ;;
     ngrok) prog_ngrok ;;
+    pixi) prog_pixi ;;
     jetbrains_toolbox) prog_jetbrains_toolbox ;;
     google_drive) prog_google_drive ;;
     intel_undervolt) prog_intel_undervolt ;;

@@ -28,6 +28,10 @@ if command -v rv >/dev/null 2>&1; then
   eval "$(rv shell init zsh)"
 fi
 
+if command -v pixi >/dev/null 2>&1; then
+  eval "$(pixi completion --shell zsh)"
+fi
+
 alias cat="bat"
 alias df="duf"
 alias du="dust"

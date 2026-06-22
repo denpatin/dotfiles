@@ -128,6 +128,8 @@ brew "overmind"
 brew "pgcli"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
+# Package management made easy
+brew "pixi"
 # Modern replacement for ps written in Rust
 brew "procs"
 # Ultra-fast CSV data-wrangling toolkit
