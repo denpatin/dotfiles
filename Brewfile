@@ -118,6 +118,8 @@ brew "neovim"
 brew "ninja"
 # Create, run, and share large language models (LLMs)
 brew "ollama"
+# On-chip debugging, in-system programming and boundary-scan testing
+brew "open-ocd"
 # Universal utility for programming FPGA
 brew "openfpgaloader"
 # Terminal multiplexer
