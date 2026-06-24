@@ -138,6 +138,8 @@ brew "qsv"
 brew "rbspy"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# GNU compiler collection for riscv64-elf
+brew "riscv64-elf-gcc"
 # Ruby autoformatter
 brew "rubyfmt"
 # Ruby version manager
