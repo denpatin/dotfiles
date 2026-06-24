@@ -196,6 +196,8 @@ cask "android-platform-tools"
 cask "brave-browser"
 # Open source IDE for exploring and testing APIs
 cask "bruno"
+# Menu bar usage monitor for Codex and Claude
+cask "codexbar"
 # Two-panel file manager
 cask "commander-one"
 cask "font-jetbrains-mono"
