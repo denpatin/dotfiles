@@ -64,6 +64,8 @@ brew "fish"
 brew "gcc"
 # Package manager and build system for Fortran
 brew "fpm"
+# Auto-formatter for modern fortran source code
+brew "fprettify"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # Interpreter for PostScript and PDF
