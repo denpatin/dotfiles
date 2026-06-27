@@ -36,6 +36,18 @@ brew "chromaprint"
 brew "clang-build-analyzer"
 # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
 brew "clang-format"
+# Next-gen compiler infrastructure
+brew "llvm"
+# Simple tool for visualizing and analyzing C/C++ project include graph
+brew "clang-include-graph"
+# Search for files matching a regex and delete them
+brew "clean"
+# C++ interpreter
+brew "cling"
+# ASP system to ground and solve logic programs
+brew "clingo"
+# Class Library for Numbers
+brew "cln"
 # Cross-platform make
 brew "cmake"
 # Create and run Linux containers using lightweight virtual machines
@@ -90,8 +102,6 @@ brew "hyperfine"
 brew "icarus-verilog"
 # Generic library support script
 brew "libtool"
-# Next-gen compiler infrastructure
-brew "llvm"
 # Tool to analyze #includes in C and C++ source files
 brew "include-what-you-use"
 # JQ clone focussed on correctness, speed, and simplicity
