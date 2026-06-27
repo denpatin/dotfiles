@@ -32,6 +32,8 @@ brew "choose-rust"
 brew "ffmpeg"
 # Core component of the AcoustID project (Audio fingerprinting)
 brew "chromaprint"
+# Tool to analyze compilation time
+brew "clang-build-analyzer"
 # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
 brew "clang-format"
 # Cross-platform make

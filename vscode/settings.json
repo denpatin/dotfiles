@@ -96,5 +96,6 @@
   "workbench.preferredDarkColorTheme": "Tokyo Night Storm",
   "terminal.integrated.fontFamily": "'JetBrains Mono'",
   "C_Cpp.intelliSenseEngine": "disabled",
-  "zig.zls.enabled": "on"
+  "zig.zls.enabled": "on",
+  "zig.path": "zig"
 }
