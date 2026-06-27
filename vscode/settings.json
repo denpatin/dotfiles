@@ -94,5 +94,6 @@
   "window.autoDetectColorScheme": true,
   "workbench.preferredLightColorTheme": "GitHub Light Default",
   "workbench.preferredDarkColorTheme": "Tokyo Night Storm",
-  "terminal.integrated.fontFamily": "'JetBrains Mono'"
+  "terminal.integrated.fontFamily": "'JetBrains Mono'",
+  "C_Cpp.intelliSenseEngine": "disabled"
 }
