@@ -97,5 +97,8 @@
   "terminal.integrated.fontFamily": "'JetBrains Mono'",
   "C_Cpp.intelliSenseEngine": "disabled",
   "zig.zls.enabled": "on",
-  "zig.path": "zig"
+  "zig.path": "zig",
+  "C_Cpp.default.cppStandard": "c++23",
+  "C_Cpp.default.cStandard": "c23",
+  "C_Cpp.default.compilerPath": ""
 }
