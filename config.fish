@@ -174,8 +174,4 @@ if type -q starship
     starship init fish | source
 end
 
-if type -q rv
-    rv shell init fish | source
-end
-
 mise activate fish | source
