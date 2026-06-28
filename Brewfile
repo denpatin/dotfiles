@@ -158,8 +158,6 @@ brew "ripgrep"
 brew "riscv64-elf-gcc"
 # Ruby autoformatter
 brew "rubyfmt"
-# Ruby version manager
-brew "rv"
 # Safe string operations and memory routines
 brew "safestringlib"
 # Fast and accurate code counter with complexity and COCOMO estimates
