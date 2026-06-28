@@ -9,7 +9,6 @@ if test -x /opt/homebrew/bin/brew
     /opt/homebrew/bin/brew shellenv | source
 end
 
-mise activate fish | source
 zoxide init fish --cmd cd | source
 
 if type -q rv
@@ -155,8 +154,6 @@ function vois
     git fetch origin --quiet
 end
 
-source ~/.orbstack/shell/init2.fish 2>/dev/null || :
-
 if test -d /opt/homebrew/opt/llvm
     fish_add_path --prepend --global /opt/homebrew/opt/llvm/bin
     set -gx CC /opt/homebrew/opt/llvm/bin/clang
@@ -178,3 +175,6 @@ set -e ccache_dir
 if type -q sccache
     set -gx RUSTC_WRAPPER sccache
 end
+
+mise activate fish | source
+source ~/.orbstack/shell/init2.fish 2>/dev/null || :
