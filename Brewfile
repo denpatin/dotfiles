@@ -64,6 +64,8 @@ brew "czkawka"
 brew "duf"
 # More intuitive version of du in rust
 brew "dust"
+# Command-line tool to interact with exercism.io
+brew "exercism"
 # Perl lib for reading and writing EXIF metadata
 brew "exiftool"
 # Modern, maintained replacement for ls
