@@ -10,8 +10,9 @@ ruby = "4.0"
 rust = "stable"
 zig = "0.16"
 
-"gem:rubocop" = "latest"
 "gem:foreman" = "latest"
+"gem:rubocop" = "latest"
+"gem:solargraph" = "latest"
 
 [settings.ruby]
 compile = false
