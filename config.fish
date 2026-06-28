@@ -3,28 +3,30 @@ set -gx EDITOR nvim
 set -gx LANG "en_US.UTF-8"
 set -gx LC_ALL "en_US.UTF-8"
 
-fish_add_path --global "$HOME/.local/bin"
+set -gx PATH "$HOME/.local/bin" $PATH
+
+if test -d /opt/homebrew/opt/llvm
+    set -gx PATH /opt/homebrew/opt/llvm/bin $PATH
+    set -gx CC /opt/homebrew/opt/llvm/bin/clang
+    set -gx CPPFLAGS "-I/opt/homebrew/opt/llvm/include $CPPFLAGS"
+    set -gx CXX /opt/homebrew/opt/llvm/bin/clang++
+    set -gx LDFLAGS "-L/opt/homebrew/opt/llvm/lib $LDFLAGS"
+end
+
+for ccache_dir in /opt/homebrew/opt/ccache/libexec /usr/lib/ccache/bin /usr/lib/ccache /usr/lib64/ccache
+    if test -d $ccache_dir
+        set -gx PATH $ccache_dir $PATH
+        break
+    end
+end
+set -e ccache_dir
+
+if type -q sccache
+    set -gx RUSTC_WRAPPER sccache
+end
 
 if test -x /opt/homebrew/bin/brew
     /opt/homebrew/bin/brew shellenv | source
-end
-
-zoxide init fish --cmd cd | source
-
-if type -q rv
-    rv shell init fish | source
-end
-
-if type -q starship
-    starship init fish | source
-end
-
-if type -q broot
-    source (broot --print-shell-function fish | psub)
-end
-
-if type -q pixi
-    pixi completion --shell fish | source
 end
 
 alias cat="bat"
@@ -40,9 +42,11 @@ alias npm="bun"
 alias npx="bunx"
 alias ps="procs"
 alias tree="eza --tree --icons=auto"
+
 if type -q ugrep
     alias grep="ugrep -G"
 end
+
 if type -q syswatch
     alias top="syswatch"
 end
@@ -154,27 +158,24 @@ function vois
     git fetch origin --quiet
 end
 
-if test -d /opt/homebrew/opt/llvm
-    fish_add_path --prepend --global /opt/homebrew/opt/llvm/bin
-    set -gx CC /opt/homebrew/opt/llvm/bin/clang
-    set -gx CPPFLAGS "-I/opt/homebrew/opt/llvm/include $CPPFLAGS"
-    set -gx CXX /opt/homebrew/opt/llvm/bin/clang++
-    set -gx LDFLAGS "-L/opt/homebrew/opt/llvm/lib $LDFLAGS"
+source ~/.orbstack/shell/init2.fish 2>/dev/null || :
+
+if type -q broot
+    source (broot --print-shell-function fish | psub)
 end
 
-fish_add_path "$HOME/.local/bin"
-
-for ccache_dir in /opt/homebrew/opt/ccache/libexec /usr/lib/ccache/bin /usr/lib/ccache /usr/lib64/ccache
-    if test -d $ccache_dir
-        fish_add_path --prepend --global $ccache_dir
-        break
-    end
+if type -q pixi
+    pixi completion --shell fish | source
 end
-set -e ccache_dir
 
-if type -q sccache
-    set -gx RUSTC_WRAPPER sccache
+zoxide init fish --cmd cd | source
+
+if type -q starship
+    starship init fish | source
+end
+
+if type -q rv
+    rv shell init fish | source
 end
 
 mise activate fish | source
-source ~/.orbstack/shell/init2.fish 2>/dev/null || :
