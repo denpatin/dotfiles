@@ -206,6 +206,8 @@ brew "yq"
 brew "zellij"
 # General-purpose lossless data-compression library
 brew "zlib"
+# Language Server for Zig
+brew "zls"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
 # Android SDK component
