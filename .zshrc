@@ -207,3 +207,5 @@ unset ccache_dir
 if command -v sccache >/dev/null 2>&1; then
   export RUSTC_WRAPPER=sccache
 fi
+
+source /Users/denpatin/.config/broot/launcher/bash/br
