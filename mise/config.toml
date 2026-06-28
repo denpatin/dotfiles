@@ -7,5 +7,9 @@ node = "lts"
 
 crystal = "1.20"
 go = "1.26"
+ruby = "4.0"
 rust = "stable"
 zig = "0.16"
+
+[settings.ruby]
+compile = false
