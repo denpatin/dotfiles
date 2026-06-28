@@ -1,6 +1,5 @@
 [tools]
 heroku = "latest"
-rebar = "latest"
 
 bun = "latest"
 node = "lts"
@@ -10,6 +9,9 @@ go = "1.26"
 ruby = "4.0"
 rust = "stable"
 zig = "0.16"
+
+"gem:rubocop" = "latest"
+"gem:foreman" = "latest"
 
 [settings.ruby]
 compile = false
