@@ -253,6 +253,8 @@ cask "raycast"
 cask "rectangle"
 # Team communication and collaboration software
 cask "slack"
+# Native screenshots, recording, annotation, and editing from the menu bar
+cask "snapzy"
 # Music streaming service
 cask "spotify"
 # System monitor for the menu bar
@@ -265,6 +267,8 @@ cask "surfshark"
 cask "telegram-desktop"
 # Temperature monitoring, fan control and diagnostics
 cask "tg-pro"
+# Cross-device clipboard syncing tool
+cask "uniclipboard"
 # Virtual machines UI using QEMU
 cask "utm"
 # Open-source code editor
