@@ -76,6 +76,8 @@ brew "fd"
 brew "libomp"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
+# Fortran language server
+brew "fortls"
 # GNU compiler collection
 brew "gcc"
 # Package manager and build system for Fortran

@@ -175,3 +175,6 @@ if type -q starship
 end
 
 mise activate fish | source
+
+# Added by codebase-memory-mcp install
+fish_add_path /Users/denpatin/.local/bin
