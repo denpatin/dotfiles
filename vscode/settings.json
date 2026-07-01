@@ -101,14 +101,13 @@
   "C_Cpp.default.cppStandard": "c++23",
   "C_Cpp.default.cStandard": "c23",
   "C_Cpp.default.compilerPath": "",
-  "[fortran]": {
-    "editor.defaultFormatter": "fortran-lang.linter-gfortran",
-    "editor.formatOnSave": true
-  },
-  "[fortran_fixed-form]": {
-    "editor.defaultFormatter": "fortran-lang.linter-gfortran",
-    "editor.formatOnSave": true
-  },
   "fortran.formatting.formatter": "fprettify",
-  "fortran.preferredCase": "lowercase"
+  "fortran.preferredCase": "lowercase",
+  "fortran.formatting.fprettifyArgs": [
+    "--case", "1", "1", "1", "1"
+  ],
+  "[FortranFreeForm]": {
+    "editor.defaultFormatter": "fortran-lang.linter-gfortran",
+    "editor.formatOnSave": true
+  }
 }
