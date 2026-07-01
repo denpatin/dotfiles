@@ -100,5 +100,15 @@
   "zig.path": "zig",
   "C_Cpp.default.cppStandard": "c++23",
   "C_Cpp.default.cStandard": "c23",
-  "C_Cpp.default.compilerPath": ""
+  "C_Cpp.default.compilerPath": "",
+  "[fortran]": {
+    "editor.defaultFormatter": "fortran-lang.linter-gfortran",
+    "editor.formatOnSave": true
+  },
+  "[fortran_fixed-form]": {
+    "editor.defaultFormatter": "fortran-lang.linter-gfortran",
+    "editor.formatOnSave": true
+  },
+  "fortran.formatting.formatter": "fprettify",
+  "fortran.preferredCase": "lowercase"
 }
