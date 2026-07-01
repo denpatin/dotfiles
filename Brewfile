@@ -1,4 +1,5 @@
 tap "homebrew/brew-vulns"
+tap "lablup/tap", trusted: true
 tap "oven-sh/bun", trusted: true
 # YAML Parser
 brew "libyaml"
@@ -214,6 +215,8 @@ brew "zlib"
 brew "zls"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+# MLX inference engine for Apple Silicon (Rust + native MLX C++ bindings)
+brew "lablup/tap/mlxcel"
 # Android SDK component
 cask "android-platform-tools"
 # Web browser focusing on privacy
