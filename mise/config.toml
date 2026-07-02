@@ -1,6 +1,18 @@
 [tools]
+bat = "latest"
+eza = "latest"
+fd = "latest"
 heroku = "latest"
+hurl = "latest"
+just = "latest"
+ripgrep = "latest"
+starship = "latest"
+xh = "latest"
+xxh = "latest"
+yazi = "latest"
+zellij = "latest"
 zls = "latest"
+zoxide = "latest"
 
 bun = "latest"
 node = "lts"

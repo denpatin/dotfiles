@@ -19,8 +19,6 @@ brew "automake"
 brew "bacon"
 # Terminal bandwidth utilization tool
 brew "bandwhich"
-# Clone of cat(1) with syntax highlighting and Git integration
-brew "bat"
 # New way to see and navigate directory trees
 brew "broot"
 # Object-file caching compiler wrapper
@@ -67,10 +65,6 @@ brew "dust"
 brew "exercism"
 # Perl lib for reading and writing EXIF metadata
 brew "exiftool"
-# Modern, maintained replacement for ls
-brew "eza"
-# Simple, fast and user-friendly alternative to find
-brew "fd"
 # LLVM's OpenMP runtime library
 brew "libomp"
 # User-friendly command-line shell for UNIX-like operating systems
@@ -99,8 +93,6 @@ brew "github-markdown-toc"
 brew "gnupg"
 # Command-line tool for generating regular expressions
 brew "grex"
-# Run and Test HTTP Requests with plain text and curl
-brew "hurl"
 # Command-line benchmarking tool
 brew "hyperfine"
 # Verilog simulation and synthesis tool
@@ -117,8 +109,6 @@ brew "jj"
 brew "jless"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# Handy way to save and run project-specific commands
-brew "just"
 # Compare and mark up LaTeX file differences
 brew "latexdiff"
 # Add indentation to LaTeX files
@@ -155,8 +145,6 @@ brew "procs"
 brew "qsv"
 # Sampling profiler for Ruby
 brew "rbspy"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
 # GNU compiler collection for riscv64-elf
 brew "riscv64-elf-gcc"
 # Safe string operations and memory routines
@@ -167,8 +155,6 @@ brew "scc"
 brew "sccache"
 # Intuitive find & replace CLI
 brew "sd"
-# Cross-shell prompt for astronauts
-brew "starship"
 # Modern and pretty fancy file manager for the terminal
 brew "superfile"
 # ISO/Edinburgh-style Prolog interpreter
@@ -191,20 +177,12 @@ brew "verilator"
 brew "vips"
 # Execute commands when watched files change
 brew "watchexec"
-# Friendly and fast tool for sending HTTP requests
-brew "xh"
-# Blazing fast terminal file manager written in Rust, based on async I/O
-brew "yazi"
 # Framework for Verilog RTL synthesis
 brew "yosys"
 # Process YAML, JSON, XML, CSV and properties documents from the CLI
 brew "yq"
-# Pluggable terminal workspace, with terminal multiplexer as the base feature
-brew "zellij"
 # General-purpose lossless data-compression library
 brew "zlib"
-# Shell extension to navigate your filesystem faster
-brew "zoxide"
 # MLX inference engine for Apple Silicon (Rust + native MLX C++ bindings)
 brew "lablup/tap/mlxcel"
 # Android SDK component
@@ -335,5 +313,7 @@ vscode "ziglang.vscode-zig"
 go "cmd/go"
 go "cmd/gofmt"
 cargo "tre"
+uv "awscli"
 uv "jupyterlab"
+uv "pgcli"
 npm "corepack"
