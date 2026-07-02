@@ -1,5 +1,6 @@
 [tools]
 heroku = "latest"
+zls = "latest"
 
 bun = "latest"
 node = "lts"
