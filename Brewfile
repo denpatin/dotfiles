@@ -211,8 +211,6 @@ brew "yq"
 brew "zellij"
 # General-purpose lossless data-compression library
 brew "zlib"
-# Language Server for Zig
-brew "zls"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
 # MLX inference engine for Apple Silicon (Rust + native MLX C++ bindings)
