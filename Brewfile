@@ -147,6 +147,8 @@ brew "qsv"
 brew "rbspy"
 # GNU compiler collection for riscv64-elf
 brew "riscv64-elf-gcc"
+# Ruby autoformatter
+brew "rubyfmt"
 # Safe string operations and memory routines
 brew "safestringlib"
 # Fast and accurate code counter with complexity and COCOMO estimates
