@@ -15,8 +15,6 @@ brew "atac"
 brew "autoconf"
 # Tool for generating GNU Standards-compliant Makefiles
 brew "automake"
-# Official Amazon AWS command-line interface
-brew "awscli"
 # Background rust code check
 brew "bacon"
 # Terminal bandwidth utilization tool
@@ -147,8 +145,6 @@ brew "openfpgaloader"
 brew "tmux"
 # Process manager for Procfile-based applications and tmux
 brew "overmind"
-# CLI for Postgres with auto-completion and syntax highlighting
-brew "pgcli"
 # Pinentry for GPG on Mac
 brew "pinentry-mac"
 # Package management made easy
@@ -163,8 +159,6 @@ brew "rbspy"
 brew "ripgrep"
 # GNU compiler collection for riscv64-elf
 brew "riscv64-elf-gcc"
-# Ruby autoformatter
-brew "rubyfmt"
 # Safe string operations and memory routines
 brew "safestringlib"
 # Fast and accurate code counter with complexity and COCOMO estimates
@@ -173,8 +167,6 @@ brew "scc"
 brew "sccache"
 # Intuitive find & replace CLI
 brew "sd"
-# Static analysis and lint tool, for (ba)sh scripts
-brew "shellcheck"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Modern and pretty fancy file manager for the terminal
