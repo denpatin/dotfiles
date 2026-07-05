@@ -19,6 +19,8 @@ brew "automake"
 brew "bacon"
 # Terminal bandwidth utilization tool
 brew "bandwhich"
+# TUI for managing Homebrew, Flatpak, and Mac App Store packages
+brew "bbrew"
 # New way to see and navigate directory trees
 brew "broot"
 # Object-file caching compiler wrapper
@@ -216,6 +218,8 @@ cask "maccy"
 cask "mactex-no-gui"
 # Minimal installer for conda specific to conda-forge
 cask "miniforge"
+# Local-first dictation and meeting transcription
+cask "muesli"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Simple application that will prevent iTunes or Apple Music from launching
