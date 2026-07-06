@@ -169,6 +169,8 @@ brew "syswatch"
 brew "tectonic"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Extremely fast Python type checker, written in Rust
+brew "ty"
 # Markup-based typesetting system
 brew "typst"
 # Ultra fast grep with query UI, fuzzy search, archive search, and more
@@ -187,6 +189,8 @@ brew "yosys"
 brew "yq"
 # General-purpose lossless data-compression library
 brew "zlib"
+# Check Homebrew packages for known vulnerabilities via osv.dev
+brew "homebrew/brew-vulns/brew-vulns"
 # MLX inference engine for Apple Silicon (Rust + native MLX C++ bindings)
 brew "lablup/tap/mlxcel"
 # Android SDK component
@@ -218,8 +222,6 @@ cask "maccy"
 cask "mactex-no-gui"
 # Minimal installer for conda specific to conda-forge
 cask "miniforge"
-# Local-first dictation and meeting transcription
-cask "muesli"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Simple application that will prevent iTunes or Apple Music from launching
