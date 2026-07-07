@@ -199,6 +199,10 @@ cask "android-platform-tools"
 cask "brave-browser"
 # Open source IDE for exploring and testing APIs
 cask "bruno"
+# Anthropic's official Claude AI desktop app
+cask "claude"
+# Terminal-based AI coding assistant
+cask "claude-code"
 # Menu bar usage monitor for Codex and Claude
 cask "codexbar"
 # Two-panel file manager
