@@ -67,6 +67,8 @@ brew "dust"
 brew "exercism"
 # Perl lib for reading and writing EXIF metadata
 brew "exiftool"
+# Like neofetch, but much faster because written mostly in C
+brew "fastfetch"
 # LLVM's OpenMP runtime library
 brew "libomp"
 # User-friendly command-line shell for UNIX-like operating systems
