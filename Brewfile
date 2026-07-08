@@ -199,16 +199,10 @@ cask "android-platform-tools"
 cask "brave-browser"
 # Open source IDE for exploring and testing APIs
 cask "bruno"
-# Anthropic's official Claude AI desktop app
-cask "claude"
-# Terminal-based AI coding assistant
-cask "claude-code"
 # Menu bar usage monitor for Codex and Claude
 cask "codexbar"
 # Two-panel file manager
 cask "commander-one"
-# Brings the power of Copilot coding agent directly to your terminal
-cask "copilot-cli"
 cask "font-jetbrains-mono"
 # Kext-less implementation of FUSE
 cask "fuse-t"
@@ -272,6 +266,7 @@ mas "PDFgear", id: 6469021132
 mas "TestFlight", id: 899247664
 mas "Xcode", id: 497799835
 vscode "andrewbutson.github-copilot-llm-gateway"
+vscode "anthropic.claude-code"
 vscode "charliermarsh.ruff"
 vscode "christian-kohler.path-intellisense"
 vscode "crystal-lang-tools.crystal-lang"
