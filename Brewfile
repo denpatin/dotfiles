@@ -232,6 +232,8 @@ cask "postgres-app"
 cask "proton-pass"
 # Control your tools with a few keystrokes
 cask "raycast"
+# Create desktop apps by chatting with AI
+cask "raycast-glaze"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
 # Team communication and collaboration software
