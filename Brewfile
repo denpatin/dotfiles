@@ -1,12 +1,6 @@
 tap "homebrew/brew-vulns"
 tap "lablup/tap", trusted: true
 tap "oven-sh/bun", trusted: true
-# YAML Parser
-brew "libyaml"
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@3"
-# Clean LaTeX code to submit to arXiv
-brew "arxiv_latex_cleaner"
 # Code searching, linting, rewriting
 brew "ast-grep"
 # Simple API client (Postman-like) in your terminal
@@ -21,6 +15,8 @@ brew "bacon"
 brew "bandwhich"
 # New way to see and navigate directory trees
 brew "broot"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@3"
 # Object-file caching compiler wrapper
 brew "ccache"
 # Human-friendly and fast alternative to cut and (sometimes) awk
@@ -107,8 +103,8 @@ brew "jj"
 brew "jless"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# Compare and mark up LaTeX file differences
-brew "latexdiff"
+# YAML Parser
+brew "libyaml"
 # LLVM Project Linker
 brew "lld"
 # Mac App Store command-line interface
@@ -159,8 +155,6 @@ brew "superfile"
 brew "swi-prolog"
 # Cross-platform system diagnostics TUI
 brew "syswatch"
-# Modernized, complete, self-contained TeX/LaTeX engine
-brew "tectonic"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Extremely fast Python type checker, written in Rust
@@ -204,8 +198,6 @@ cask "google-drive"
 cask "jetbrains-toolbox"
 # Clipboard manager
 cask "maccy"
-# Full TeX Live distribution without GUI applications
-cask "mactex-no-gui"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Simple application that will prevent iTunes or Apple Music from launching
