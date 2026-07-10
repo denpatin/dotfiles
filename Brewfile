@@ -29,10 +29,6 @@ brew "chromaprint"
 brew "clang-build-analyzer"
 # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
 brew "clang-format"
-# Next-gen compiler infrastructure
-brew "llvm"
-# Simple tool for visualizing and analyzing C/C++ project include graph
-brew "clang-include-graph"
 # Search for files matching a regex and delete them
 brew "clean"
 # C++ interpreter
@@ -89,10 +85,10 @@ brew "gnupg"
 brew "grex"
 # Command-line benchmarking tool
 brew "hyperfine"
-# Verilog simulation and synthesis tool
-brew "icarus-verilog"
 # Generic library support script
 brew "libtool"
+# Next-gen compiler infrastructure
+brew "llvm"
 # Tool to analyze #includes in C and C++ source files
 brew "include-what-you-use"
 # JQ clone focussed on correctness, speed, and simplicity
@@ -119,10 +115,6 @@ brew "neovim"
 brew "ninja"
 # Create, run, and share large language models (LLMs)
 brew "ollama"
-# On-chip debugging, in-system programming and boundary-scan testing
-brew "open-ocd"
-# Universal utility for programming FPGA
-brew "openfpgaloader"
 # Terminal multiplexer
 brew "tmux"
 # Process manager for Procfile-based applications and tmux
@@ -137,8 +129,6 @@ brew "procs"
 brew "qsv"
 # Sampling profiler for Ruby
 brew "rbspy"
-# GNU compiler collection for riscv64-elf
-brew "riscv64-elf-gcc"
 # Ruby autoformatter
 brew "rubyfmt"
 # Safe string operations and memory routines
@@ -165,14 +155,10 @@ brew "typst"
 brew "ugrep"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
-# Verilog simulator
-brew "verilator"
 # Image processing library
 brew "vips"
 # Execute commands when watched files change
 brew "watchexec"
-# Framework for Verilog RTL synthesis
-brew "yosys"
 # Process YAML, JSON, XML, CSV and properties documents from the CLI
 brew "yq"
 # General-purpose lossless data-compression library
