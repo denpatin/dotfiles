@@ -19,8 +19,6 @@ brew "automake"
 brew "bacon"
 # Terminal bandwidth utilization tool
 brew "bandwhich"
-# TUI for managing Homebrew, Flatpak, and Mac App Store packages
-brew "bbrew"
 # New way to see and navigate directory trees
 brew "broot"
 # Object-file caching compiler wrapper
@@ -43,8 +41,6 @@ brew "clang-include-graph"
 brew "clean"
 # C++ interpreter
 brew "cling"
-# ASP system to ground and solve logic programs
-brew "clingo"
 # Class Library for Numbers
 brew "cln"
 # Cross-platform make
@@ -63,8 +59,6 @@ brew "czkawka"
 brew "duf"
 # More intuitive version of du in rust
 brew "dust"
-# Command-line tool to interact with exercism.io
-brew "exercism"
 # Perl lib for reading and writing EXIF metadata
 brew "exiftool"
 # Like neofetch, but much faster because written mostly in C
@@ -115,8 +109,6 @@ brew "jless"
 brew "jq"
 # Compare and mark up LaTeX file differences
 brew "latexdiff"
-# Add indentation to LaTeX files
-brew "latexindent"
 # LLVM Project Linker
 brew "lld"
 # Mac App Store command-line interface
@@ -191,18 +183,12 @@ brew "yosys"
 brew "yq"
 # General-purpose lossless data-compression library
 brew "zlib"
-# Check Homebrew packages for known vulnerabilities via osv.dev
-brew "homebrew/brew-vulns/brew-vulns"
 # MLX inference engine for Apple Silicon (Rust + native MLX C++ bindings)
 brew "lablup/tap/mlxcel"
-# Android SDK component
-cask "android-platform-tools"
 # Web browser focusing on privacy
 cask "brave-browser"
 # Open source IDE for exploring and testing APIs
 cask "bruno"
-# Anthropic's official Claude AI desktop app
-cask "claude"
 # Menu bar usage monitor for Codex and Claude
 cask "codexbar"
 # Two-panel file manager
@@ -212,8 +198,6 @@ cask "font-jetbrains-mono"
 cask "fuse-t"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# Native client for GitHub Copilot
-cask "github-copilot-app"
 # Client for the Google Drive storage service
 cask "google-drive"
 # JetBrains tools manager
@@ -236,8 +220,6 @@ cask "postgres-app"
 cask "proton-pass"
 # Control your tools with a few keystrokes
 cask "raycast"
-# Create desktop apps by chatting with AI
-cask "raycast-glaze"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
 # Team communication and collaboration software
@@ -262,8 +244,6 @@ cask "uniclipboard"
 cask "utm"
 # Open-source code editor
 cask "visual-studio-code"
-# Multiplayer code editor
-cask "zed"
 # Video communication and virtual meeting platform
 cask "zoom"
 mas "Numbers", id: 361304891
