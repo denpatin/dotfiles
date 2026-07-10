@@ -206,8 +206,6 @@ cask "jetbrains-toolbox"
 cask "maccy"
 # Full TeX Live distribution without GUI applications
 cask "mactex-no-gui"
-# Minimal installer for conda specific to conda-forge
-cask "miniforge"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Simple application that will prevent iTunes or Apple Music from launching
