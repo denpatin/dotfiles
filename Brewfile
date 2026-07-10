@@ -182,6 +182,8 @@ cask "ghostty"
 cask "google-drive"
 # JetBrains tools manager
 cask "jetbrains-toolbox"
+# Blocks all Keyboard and TouchBar input
+cask "keyboardcleantool"
 # Clipboard manager
 cask "maccy"
 # Reverse proxy, secure introspectable tunnels to localhost
