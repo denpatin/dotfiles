@@ -1,4 +1,3 @@
-tap "homebrew/brew-vulns"
 tap "lablup/tap", trusted: true
 tap "oven-sh/bun", trusted: true
 # Code searching, linting, rewriting

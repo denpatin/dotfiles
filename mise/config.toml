@@ -1,6 +1,6 @@
 [tools]
 bat = "latest"
-eza = "latest"
+"cargo:eza" = "latest"
 fd = "latest"
 heroku = "latest"
 hurl = "latest"
