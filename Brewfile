@@ -46,6 +46,8 @@ brew "cppcheck"
 brew "pkgconf"
 # Duplicate file utility
 brew "czkawka"
+# .NET Core
+brew "dotnet"
 # Disk Usage/Free Utility - a better 'df' alternative
 brew "duf"
 # More intuitive version of du in rust
@@ -225,10 +227,12 @@ cask "utm"
 cask "visual-studio-code"
 # Video communication and virtual meeting platform
 cask "zoom"
+mas "Flow", id: 1423210932
 mas "Numbers", id: 361304891
 mas "Pages", id: 361309726
 mas "PDFgear", id: 6469021132
 mas "TestFlight", id: 899247664
+mas "TomoBar", id: 6755073574
 mas "Xcode", id: 497799835
 vscode "andrewbutson.github-copilot-llm-gateway"
 vscode "anthropic.claude-code"
