@@ -1,0 +1,15 @@
+[Unit]
+Description=Initialize ephemeral PostgreSQL cluster in tmpfs
+RequiresMountsFor=/ram
+Before=postgresql.service
+ConditionPathIsMountPoint=/ram
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=postgres
+Group=postgres
+ExecStart=/usr/local/bin/pg-ram-init
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,3 @@
+d /ram/tmp 1777 root root -
+d /ram/proj 0755 denpatin denpatin -
+d /ram/pgdata 0700 postgres postgres -

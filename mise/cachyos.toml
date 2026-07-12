@@ -1,0 +1,29 @@
+[tools]
+gh = "latest"
+"cargo:md-tui" = "latest"
+"cargo:procs" = "latest"
+qsv = "latest"
+shellcheck = "latest"
+"cargo:syswatch" = "latest"
+ty = "latest"
+yq = "latest"
+"ubi:imsnif/bandwhich" = "latest"
+"ubi:boyter/scc" = "latest"
+"ubi:rbspy/rbspy" = "latest"
+
+[settings]
+disable_tools = [
+  "bat",
+  "fd",
+  "hurl",
+  "just",
+  "ripgrep",
+  "starship",
+  "xh",
+  "yazi",
+  "zellij",
+  "zoxide",
+]
+
+[settings.ruby]
+compile = true

@@ -1,100 +1,87 @@
 Den's Dotfiles
 ==============
 
-Single-command, idempotent workstation setup for MacOS and Linux.
-`install.sh` detects platform, CPU and architecture, then brings the machine
-to a known state. Re-runs never duplicate or break anything already present --
-existing items get confirmed and skipped.
-
-Updates continuously in progress~
-
-## My machines
-
-- **MacBook Pro 16"** (2026): Apple M5 Max 3nm SoC, 18 cores (6 S-cores +
-  12 P-cores), 18 threads, 16-core NPU, 614GB/s unified memory bandwidth,
-  128GB Unified Memory, 2TB Apple SSD, 16.2" Liquid Retina XDR
-  (3456 x 2234) 120Hz ProMotion mini-LED
-- **ThinkPad X1 Carbon Gen 11** (2023): 13th Gen Intel Core i7-1370P vPro
-  28W, 14 cores (6 P-cores + 8 E-cores), 20 threads, 24M cache, max turbo
-  5.20 GHz, base 1.90 GHz, Intel Iris Xe 128MB, 64GB LPDDR5X-7500, 2TB
-  NVMe SSD, 14" WUXGA (1920 x 1200) IPS
-
-## Supported systems
-
-| OS                | Managers                 | Notes                       |
-| ----------------- | ------------------------ | --------------------------- |
-| `MacOS`           | `Homebrew` + `mise`      | reference setup, `Brewfile` |
-| `CachyOS` (Arch)  | `pacman`/`paru` + `mise` | CPU-opt repos, native build |
-| `Ubuntu` 24/26.04 | `apt` + `mise`           | amd64 / arm64               |
-| `Oracle`/`RHEL`10 | `dnf`/`yum` + `mise`     | amd64 / arm64               |
-| `NixOS` 26.05     | `nix profile` + `mise`   | advisory (declarative) only |
+Single-command, idempotent workstation setup for MacOS, CachyOS and Ubuntu.
+`install.sh` detects the profile, CPU and micro-arch level, then brings the machine to a
+known state. It **adds and updates, never deletes and never duplicates** -- re-running is
+always safe.
 
 ## Quick start
 
+From a completely bare system (only `curl` required -- git, shell and everything else get
+installed for you):
+
 ```sh
-git clone git@github.com:denpatin/dotfiles.git ~/dotfiles
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/denpatin/dotfiles/HEAD/install.sh)"
+```
+
+It installs `git`, clones this repo to `~/dotfiles`, and hands off to the real installer.
+
+If the repo is already cloned:
+
+```sh
 ~/dotfiles/install.sh
 ```
+
+Both paths do exactly the same thing and converge on the same state.
 
 Flags:
 
 ```
---shell fish|zsh   pick shell non-interactively (default fish)
---yes, -y          accept defaults, no prompts
---upgrade          re-run installers for already-installed non-repo tools
---status           print installed vs missing, then exit (Linux only)
+--kind gui|cli|wsl  gui = standalone with desktop apps
+                    cli = standalone, no desktop apps, still tunes kernel/drivers/power
+                    wsl = no desktop apps, no kernel or hardware tuning
+--shell fish|zsh    pick shell non-interactively (default fish)
+--yes, -y           accept defaults, no prompts
+--upgrade           re-run installers for already-installed non-repo tools
+--status            print installed vs missing, then exit
 ```
 
-Linux runs interactively: installed/missing report, then `Proceed installing
-X?` per step. Any step is skippable without aborting the rest. Idempotent
-throughout -- stopping midway and re-running is safe.
+`--kind` is the **first question and has no default** -- a wrong silent guess would install
+desktop apps on a headless box. It is auto-set to `wsl` under WSL and to `gui` on macOS, and
+is required alongside `--yes` on a standalone Linux box.
+
+Order is fixed: distro -> system kind -> shell (installed **and made default first**) ->
+package manager -> toolchain -> kernel/tuning -> mise -> symlinks -> tools -> programs.
+
+## Two independent axes
+
+**Distro** (auto-detected) decides how hard things get optimized:
+
+| Distro    | Policy                                                    |
+| --------- | --------------------------------------------------------- |
+| `macos`   | Homebrew + `mise`; `Brewfile` rules; never touched         |
+| `cachyos` | x86-64-v3 repos, native rebuilds, native Ruby              |
+| `ubuntu`  | stock kernel, apt + `mise`, no optimization                |
+
+**System kind** (first question; WSL is auto-detected) decides GUI and hardware:
+
+| Kind  | Desktop apps | Kernel / drivers / power | `/ram` + RAM-Postgres |
+| ----- | ------------ | ------------------------ | --------------------- |
+| `gui` | yes          | yes                      | yes (CachyOS)         |
+| `cli` | no           | yes                      | yes (CachyOS)         |
+| `wsl` | no           | no                       | no                    |
+
+So a headless CachyOS box still gets every CPU optimization, and CachyOS under WSL still gets
+v3 repos and native builds -- just no kernel, drivers or power tuning. Ubuntu stays boring
+either way so Vivado never breaks; WSL2's kernel belongs to Windows (`wsl --update`), not to
+the distro.
+
+## My machines
+
+- **MacBook Pro 16"** (2026): Apple M5 Max, 18 cores (6 S + 12 P), 40-core GPU,
+  128GB unified memory, 2TB SSD
+- **ThinkPad X1 Carbon Gen 11** (2023): i7-1370P vPro 28W, 14 cores (6 P + 8 E), 20 threads,
+  64GB LPDDR5X-7500, 2TB NVMe
 
 ## Shells
 
-Chosen once at start; the whole environment is wired for it.
+Chosen once at start, installed and made the login shell before anything else.
+`config.fish` is the **source of truth**; `.zshrc` is a strict mirror -- identical aliases
+and functions, one for one.
 
-- `fish` (default) -- `config.fish`, key bindings in `fish_functions/`
-- `zsh` -- `.zshrc`, `.zshenv`
-
-Identical aliases, abbreviations, and functions across both. Prompt `starship`,
-directory jump `zoxide` (bound to `cd`).
-
-`fzf`, `broot`, `yazi` (`yy`) integrations load when present.
-
-## Packages per OS
-
-- `MacOS` -- `Homebrew` formulae and casks (`Brewfile`), `mise` for runtimes
-  and a few CLI tools, `cargo` for the rest; source of truth for GUI apps,
-  never migrated
-- `Ubuntu`/`Oracle` -- distro packages for system libs and toolchain,
-  `mise` for CLI tools and runtimes (latest/LTS, unpinned)
-- `CachyOS` -- core CLI from CPU-optimized `pacman` repos, `paru` (AUR) for
-  the rest (see CPU optimization)
-- `NixOS` -- `nix profile` for packages; LaTeX, default shell and
-  `intel-undervolt` surfaced as `configuration.nix` edits, not applied
-
-## Mandatory Tools
-
-> Everywhere, up-front
-
-- Browser / terminal / editor -- `Brave`, `Ghostty`, `Neovim`
-- Core CLI -- `git`, `mise`, `uv`, `rv`, `bat`, `fd`, `fzf`, `ripgrep`, `eza`,
-  `zoxide`, `git-delta`, `starship`, `just`, `jaq`, `yq`, `zellij`, `yazi`,
-  `broot`, `dust`, `duf`, `procs`, `sd`, `hyperfine`, `ugrep`, `watchexec`,
-  `sccache`, `qsv`
-
-## Optional Tools
-
-> Only for Linux
-
-`VS Code` + extensions, `LaTeX` (TeX Live) + `Typst`, `pixi`, `syswatch`,
-`AWS CLI`, `PostgreSQL`, `Ollama`, `rubyfmt`, `SWI-Prolog`, `ngrok`,
-`JetBrains Toolbox`, `czkawka`, and (Intel-only!!) `intel-undervolt`
-(power limits `30/8 22/10`)
-
-## Replaced Commands
-
-Modern power for my old muscle memory:
+Every command-replacing alias is guarded by an existence check, so a half-installed system
+never loses `cat`, `ls`, `find` or `grep`.
 
 | Command | Tool       |
 | ------- | ---------- |
@@ -106,104 +93,148 @@ Modern power for my old muscle memory:
 | `grep`  | `ugrep -G` |
 | `jq`    | `jaq`      |
 | `ls`    | `eza`      |
+| `node`  | `bun`      |
 | `ps`    | `procs`    |
 | `top`   | `syswatch` |
 
-NB: `ripgrep` stays separate for ad-hoc fast search, tho.
+`ripgrep` stays separate for ad-hoc search.
 
-## Tools by Domain
+## Updating
+
+`upd` is the daily path on every OS. On Linux it prints what changed, from which version to
+which, and asks before applying -- the native tools already behave like `brew` when you
+don't silence them with `-y`:
+
+- `cachyos` -- `paru -Syu` (repos + AUR in one shot), then `mise outdated` + `mise upgrade`,
+  then `uv tool upgrade --all`
+- `ubuntu`/`wsl` -- `apt update` + `apt list --upgradable` + `apt upgrade`, then the same
+  `mise`/`uv` steps
+- `macos` -- unchanged `brew` pipeline
+
+Re-running `install.sh` converges to the same state but is not the update path.
+
+## CPU optimization (CachyOS only)
+
+Micro-arch level is read from the dynamic loader, never hardcoded. The i7-1370P reports
+`x86-64-v3` (Raptor Lake fuses off AVX-512, so `v4` cannot appear). If it ever reports less
+than `v3`, the installer aborts rather than silently using a slower repo.
+
+**Kernel: `linux-cachyos-bore-lto`, prebuilt for x86-64-v3.** BORE + Clang ThinLTO + `-O3` +
+1000 Hz + `PREEMPT_FULL`. Nothing is compiled: the repo build already has everything, and a
+local kernel build would buy ~0-2% (the kernel barely uses AVX2) while costing half an hour
+per point release.
+
+**BORE over EEVDF**: stock `linux-cachyos` defaults to EEVDF. BORE boosts tasks that sleep
+and wake often, which is exactly "editor and terminal stay responsive while `make -j20`
+saturates all 20 threads". The `-lto` variant means BORE no longer costs the ThinLTO build,
+so there is no tradeoff left to make.
+
+Where each tool comes from:
+
+- **x86-64-v3 repos** -- `bat`, `fd`, `ripgrep`, `zoxide`, `yazi`, `zellij`, `just`, `hurl`,
+  `xh`, `neovim`, `git-delta`, `dust`, `duf`, `fzf`, `hyperfine`, `jaq`, `jq`, `jless`,
+  `jujutsu`, `sccache`, `ccache`, `sd`, `tmux`, `typst`, `uv`, `watchexec`, `broot`, `atac`,
+  `ugrep`, `ghostty`, `git`, `cmake`, `mold`, `gcc`, `llvm`, `clang`, `postgresql`
+- **Compiled natively via `cargo`** (`target-cpu=native` from `cargo/config.toml`) -- `eza`,
+  `procs`, `md-tui`, `syswatch`
+- **Natively rebuilt from source** (`paru -G` + tuned makepkg) -- `starship` and `fish`, the
+  only hot daily-drivers with no v3 build. Optional menu item.
+- **Ruby is compiled from source** with `-march=native` (`compile = true` in
+  `mise/cachyos.toml`) -- every rspec run goes through the interpreter, so this is not a
+  micro-optimization
+- **Left generic on purpose** -- `bun` (rebuilding it is a Zig + JavaScriptCore build measured
+  in hours, and it is not CPU-bound)
+- **Not available on Linux at all** -- `clean`; `fd <regex> -X rm` does the same thing
+
+`/etc/makepkg.conf.d/99-native.conf` (a drop-in, so `cachyos-settings` cannot overwrite it)
+gives every AUR and rebuilt package `-march=native -O3`, LTO, ccache, `target-cpu=native`
+and `GOAMD64=v3` for free.
+
+## Thermals (CachyOS + Ubuntu, same ThinkPad)
+
+`intel-undervolt` with `power package 30/8 22/10` -- PL2 30W/8s, PL1 22W/10s.
+
+A 22W sustained cap settles the X1C around 65-75 C, so the chip never reaches its thermal
+ceiling and never drops clocks, while the 30W/8s window covers exactly the short compile and
+test spikes. `thermald` and `power-profiles-daemon` handle the rest; `ananicy-cpp` +
+`cachyos-ananicy-rules` is what keeps VSCode responsive while `-j20` runs.
+
+## RAM workflow (CachyOS)
+
+32GB tmpfs at `/ram`. `TMPDIR=/ram/tmp`, so every compiler temp file, rspec fixture and
+node/esbuild scratch already lands in RAM.
+
+Three commands, project-independent, no sudo, run from anywhere inside a project:
+
+```sh
+ram      # copy this project into /ram, symlink the original path at it
+unram    # sync it back to disk, restore the real directory
+rams     # what is in RAM right now, with sizes
+```
+
+`ram` copies (never moves): the on-disk `<project>.disk` stays as backing, so a reboot loses
+only work since the last sync -- never the repo, never `.git`. It refuses to run if `/ram`
+is unmounted or too small, and rolls back cleanly on any rsync failure.
+
+Because the original path becomes a symlink, everything -- `foreman`, `rspec`, `bun`,
+`cargo`, `zig`, VSCode -- keeps using the same path and transparently works in RAM.
+**Restart long-running processes after `ram`**: anything started earlier still holds the old
+directory's inode.
+
+## PostgreSQL in RAM (CachyOS)
+
+The whole cluster lives in `/ram/pgdata` on **port 5433** and is **rebuilt empty on every
+boot** by `pg-ram-init.service`. Development and test data are both disposable by design.
+
+`fsync=off`, `full_page_writes=off`, `synchronous_commit=off`, `wal_level=minimal`,
+`jit=off`, `max_connections=200` (enough for `parallel_rspec -n 12` plus foreman). Most of
+the rspec speedup comes from durability being off, not from tmpfs itself.
+
+Superusers `postgres` and `denpatin`, trust auth on localhost -- so `psql -U postgres -h
+localhost -p 5433` and DataGrip both connect with no password. tmpfs is invisible from the
+outside: it is an ordinary TCP server on `localhost:5433`.
+
+After a reboot the cluster is empty, so reload it the usual way:
+
+```sh
+just slup     # staging dump -> drecreate + drestore into localhost:5433
+just ssp      # parallel test DBs + full suite
+```
+
+## Languages
+
+All managed by `mise`, identical on every machine:
+
+- Bun, Node (LTS)
+- Crystal, Go, Ruby, Rust, Zig (+ `zls`)
+- Python via `uv`
+- C/C++ via system `clang`/`gcc` (+ `mold` linker, `ccache`)
+
+Gems: `foreman`, `rubocop`, `solargraph`.
+
+## Tools by domain
 
 - Search / nav -- `ripgrep`, `ugrep`, `fd`, `fzf`, `zoxide`, `broot`, `yazi`
-- Inspect / diff -- `bat`, `eza`, `git-delta`, `jless`, `jaq`, `yq`, `qsv`,
-  `choose`, `grex`
-- Run / build -- `just`, `watchexec`, `hyperfine`, `sccache`, `mise`
-- System / disk -- `dust`, `duf`, `procs`, `bandwhich`, `czkawka`, `syswatch`
-- Metrics -- `scc`
-- VCS / multiplex -- `git`, `jujutsu` (so far only combined with `git`),
-  `zellij`
-- Profiling -- `rbspy`
-- API testing -- `xh`, `hurl`, `atac`, `Bruno`
-- Typesetting -- `Typst` + TeX Live (`latexmk`, `biber`, `chktex`)
+- Inspect / diff -- `bat`, `eza`, `git-delta`, `jless`, `jaq`, `yq`, `qsv`, `choose`, `grex`
+- Build / run -- `just`, `watchexec`, `hyperfine`, `sccache`, `ccache`, `mold`, `cmake`, `mise`
+- System -- `dust`, `duf`, `procs`, `bandwhich`, `syswatch`, `czkawka`
+- VCS / multiplex -- `git`, `jujutsu`, `zellij`, `tmux`
+- API -- `xh`, `hurl`, `atac`, `ngrok`
+- Python -- `uv`, `ty`, `jupyterlab`
+- Ruby -- `rubyfmt`, `rbspy`, `foreman`
+- Typesetting -- `typst`, TeX Live
+- Metrics -- `scc`, `tokei`
 
-## Languages & Ecosystems
+## Repo structure
 
-- C (`gcc-16`, `clang` 22) -- C17 (+23)
-- C++ (`g++-16`, `clang++` 22) -- C++20 (+23/26)
-- Clojure (`Leiningen`, `babashka`)
-- Crystal
-- Elixir (`mix`)
-- Erlang (`rebar`)
-- Fortran (`gfortran`, `fpm`)
-- Gleam
-- Go (+ TinyGo)
-- JS/TS (`Node`, `Bun`)
-- Julia
-- Nim
-- Odin
-- Prolog (`SWI-Prolog`)
-- Python (`uv`)
-- Ruby (`rv`)
-- Rust (`cargo`)
-- Zig
-
-NB: `MacOS`: bare `gcc`/`cc` are Apple `clang`; GNU GCC is the `-16` suffix;
-bare `clang` is `Homebrew` `llvm` 22. All route through the `ccache` shim on
-`PATH`.
-
-## GUI Apps & Casks
-
-- Dev -- `VS Code`, `Sublime Text`, `OrbStack`, `JetBrains Toolbox`,
-  `GitHub Copilot`, `ngrok`, `Postgres.app`, `UTM`, `Bruno`
-- Internet / Social / Msgs -- `Brave`, `Slack`, `Telegram`, `Zoom`
-- Productivity / system -- `Raycast`, `Rectangle`, `Maccy`, `Stats`,
-  `Commander One`, `Proton Pass`, `notunes` (cuz fuck Apple Music),
-  `TG Pro`, `Surfshark`
-- Media / storage -- `Spotify`, `Google Drive`, `fuse-t`
-- Fonts -- `JetBrains Mono`
-
-## CPU Optimizations for CachyOS
-
-CPU arch & micro-arch level (`v2`/`v3`/`v4`) detected from the dynamic loader
-and `/proc/cpuinfo`, so nothing about the CPU is hardcoded.
-
-- Official `CachyOS` repos serve the matching `x86-64-vN` build per package
-- `makepkg.conf` set to `-march=native -mtune=native`, `ccache`,
-  `RUSTFLAGS=-C target-cpu=native` -- AUR builds target the exact CPU
-- `~/.cargo/config.toml` (from `cargo/config.toml`) applies `target-cpu=native`
-  to every `cargo` / `mise` cargo-backend build
-- Generated `~/.config/mise/conf.d/cachyos.toml` disables `mise` prebuilts for
-  core tools already from the optimized repos, keeping CPU-tuned binaries first
-  on `PATH` (still needs double-sanity-checking, still in progress)
-
-Core daily-drivers and anything compiled locally are built for the running CPU
-automatically.
-
-Other distros use generic `mise` prebuiltins -- intentionally no per-tool
-source builds cuz no need (?) outside CachyOS (?).
-
-## Per-OS nuances
-
-- `MacOS` -- non-interactive by design, never touches the `Homebrew` setup
-- `CachyOS` -- only target that compiles for the exact CPU
-- `Ubuntu` / (any) `RHEL` -- `ugrep` best-effort from distro repos; fallbacks
-to system `grep` if absent or any errors
-- `NixOS` -- LaTeX (`texliveFull`), login shell, `intel-undervolt`
-  (`services.undervolt`) surfaced as `configuration.nix` edits
-- `intel-undervolt` -- installs only on `GenuineIntel`; AMD / ARM skip it
-
-## Repo Structure
-
-- `install.sh` -- God-mode cross-OS installer
-- `Brewfile` -- MacOS's Homebrew formulae and casks
-- `mise/config.toml` -- language runtimes (shared)
-- `mise/linux.toml` -- `mise` CLIs for Linux
-- `cargo/config.toml` -- native CPU rustflags
-- `config.fish` -- fish config (aliases, functions, integrations, etc)
-- `.zshrc` / `.zshenv` -- zsh config (mainly just a functional mirror of fish)
-- `starship.toml` -- prompt
-- `zellij/` -- multiplex config
-- `ghostty/` -- term config
-- `nvim/` -- neovim config
-- `vscode/` -- VSCode settings + extension list
-- `ssh/` -- SSH client config
-- `.gitconfig` -- git config
+- `install.sh` -- cross-OS installer (bootstrap + 4 profiles)
+- `Brewfile` -- MacOS formulae, casks, VSCode extensions
+- `config.fish` -- fish config (source of truth)
+- `.zshrc` / `.zshenv` -- zsh config (strict mirror of fish)
+- `mise/config.toml` -- runtimes + CLI shared by all OSes
+- `mise/linux.toml` -- extra CLI for Ubuntu/WSL
+- `mise/cachyos.toml` -- CachyOS overlay: disables mise tools covered by v3 repos,
+  compiles Ruby natively
+- `cargo/config.toml` -- `target-cpu=native` + `mold` linker
+- `linux/` -- makepkg drop-in, zram, `/ram` tmpfs, RAM-Postgres units, TrackPoint rule
+- `nvim/`, `ghostty/`, `zellij/`, `starship.toml`, `vscode/`, `ssh/`, `.gitconfig`
