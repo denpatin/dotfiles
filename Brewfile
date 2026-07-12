@@ -174,8 +174,6 @@ cask "bruno"
 cask "codexbar"
 # Two-panel file manager
 cask "commander-one"
-# Website and application blocker
-cask "focus"
 cask "font-jetbrains-mono"
 # Kext-less implementation of FUSE
 cask "fuse-t"
