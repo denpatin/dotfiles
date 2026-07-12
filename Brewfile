@@ -225,7 +225,6 @@ cask "utm"
 cask "visual-studio-code"
 # Video communication and virtual meeting platform
 cask "zoom"
-mas "Flow", id: 1423210932
 mas "Numbers", id: 361304891
 mas "Pages", id: 361309726
 mas "PDFgear", id: 6469021132
