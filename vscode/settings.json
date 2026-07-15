@@ -109,5 +109,8 @@
   "[FortranFreeForm]": {
     "editor.defaultFormatter": "fortran-lang.linter-gfortran",
     "editor.formatOnSave": true
-  }
+  },
+  "chat.byokUtilityModelDefault": "mainAgent",
+  "chat.utilityModel": "",
+  "chat.utilitySmallModel": ""
 }

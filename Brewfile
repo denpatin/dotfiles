@@ -187,6 +187,8 @@ cask "jetbrains-toolbox"
 cask "keyboardcleantool"
 # Clipboard manager
 cask "maccy"
+# Markdown previewer with bundled Quick Look extension
+cask "markdown-preview"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Simple application that will prevent iTunes or Apple Music from launching
@@ -237,7 +239,6 @@ vscode "charliermarsh.ruff"
 vscode "christian-kohler.path-intellisense"
 vscode "crystal-lang-tools.crystal-lang"
 vscode "dan-c-underwood.arm"
-vscode "danlambiase.lmstudio-copilot-provider"
 vscode "davidanson.vscode-markdownlint"
 vscode "donjayamanne.githistory"
 vscode "eamodio.gitlens"
