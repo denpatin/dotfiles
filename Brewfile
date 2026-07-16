@@ -170,6 +170,8 @@ brew "lablup/tap/mlxcel"
 cask "brave-browser"
 # Open source IDE for exploring and testing APIs
 cask "bruno"
+# Anthropic's official Claude AI desktop app
+cask "claude"
 # Menu bar usage monitor for Codex and Claude
 cask "codexbar"
 # Two-panel file manager
