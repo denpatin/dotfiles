@@ -172,6 +172,8 @@ cask "brave-browser"
 cask "bruno"
 # Anthropic's official Claude AI desktop app
 cask "claude"
+# Terminal-based AI coding assistant
+cask "claude-code"
 # Menu bar usage monitor for Codex and Claude
 cask "codexbar"
 # Two-panel file manager
