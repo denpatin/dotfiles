@@ -112,5 +112,7 @@
   },
   "chat.byokUtilityModelDefault": "mainAgent",
   "chat.utilityModel": "",
-  "chat.utilitySmallModel": ""
+  "chat.utilitySmallModel": "",
+  "chat.sessionSync.enabled": true,
+  "claudeCode.preferredLocation": "panel"
 }

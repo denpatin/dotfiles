@@ -78,6 +78,8 @@ brew "ghostscript"
 brew "git"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
+# Quickly rewrite git repository history
+brew "git-filter-repo"
 # Easy TOC creation for GitHub README.md (in go)
 brew "github-markdown-toc"
 # GNU Privacy Guard (OpenPGP)
