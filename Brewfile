@@ -128,6 +128,8 @@ brew "pinentry-mac"
 brew "pixi"
 # Modern replacement for ps written in Rust
 brew "procs"
+# Monitor data's progress through a pipe
+brew "pv"
 # Ultra-fast CSV data-wrangling toolkit
 brew "qsv"
 # Sampling profiler for Ruby
