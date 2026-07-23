@@ -112,12 +112,16 @@ brew "mas"
 brew "md-tui"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
+# NCurses Disk Usage
+brew "ncdu"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 # Small build system for use with gyp or CMake
 brew "ninja"
 # Create, run, and share large language models (LLMs)
 brew "ollama"
+# Simplified-traditional Chinese conversion tool
+brew "opencc"
 # Terminal multiplexer
 brew "tmux"
 # Process manager for Procfile-based applications and tmux

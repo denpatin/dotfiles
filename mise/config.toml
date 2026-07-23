@@ -17,7 +17,7 @@ zoxide = "latest"
 bun = "latest"
 node = "lts"
 
-crystal = "1.20"
+crystal = "1.21"
 go = "1.26"
 ruby = "4.0"
 rust = "stable"
