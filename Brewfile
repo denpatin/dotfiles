@@ -86,6 +86,10 @@ brew "github-markdown-toc"
 brew "gnupg"
 # Command-line tool for generating regular expressions
 brew "grex"
+# YAML Parser
+brew "libyaml"
+# Client library for huggingface.co hub
+brew "hf"
 # Command-line benchmarking tool
 brew "hyperfine"
 # Generic library support script
@@ -102,8 +106,6 @@ brew "jj"
 brew "jless"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# YAML Parser
-brew "libyaml"
 # LLVM Project Linker
 brew "lld"
 # Mac App Store command-line interface
