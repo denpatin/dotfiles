@@ -26,6 +26,8 @@ zig = "0.16"
 "gem:foreman" = "latest"
 "gem:rubocop" = "latest"
 "gem:solargraph" = "latest"
+ruff = "latest"
+shfmt = "latest"
 
 [settings.ruby]
 compile = false
