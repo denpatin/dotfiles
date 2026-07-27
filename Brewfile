@@ -180,6 +180,8 @@ brew "lablup/tap/mlxcel"
 cask "brave-browser"
 # Open source IDE for exploring and testing APIs
 cask "bruno"
+# Terminal-based AI coding assistant
+cask "claude-code"
 # Menu bar usage monitor for Codex and Claude
 cask "codexbar"
 # Two-panel file manager
