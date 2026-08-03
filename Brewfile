@@ -1,4 +1,3 @@
-tap "lablup/tap", trusted: true
 tap "oven-sh/bun", trusted: true
 # Code searching, linting, rewriting
 brew "ast-grep"
@@ -80,6 +79,8 @@ brew "git"
 brew "git-delta"
 # Quickly rewrite git repository history
 brew "git-filter-repo"
+# Git LFS plugin that uploads and downloads using the Xet protocol
+brew "git-xet"
 # Easy TOC creation for GitHub README.md (in go)
 brew "github-markdown-toc"
 # GNU Privacy Guard (OpenPGP)
@@ -142,8 +143,6 @@ brew "qsv"
 brew "rbspy"
 # Ruby autoformatter
 brew "rubyfmt"
-# Safe string operations and memory routines
-brew "safestringlib"
 # Fast and accurate code counter with complexity and COCOMO estimates
 brew "scc"
 # Used as a compiler wrapper and avoids compilation when possible
@@ -174,8 +173,6 @@ brew "watchexec"
 brew "yq"
 # General-purpose lossless data-compression library
 brew "zlib"
-# MLX inference engine for Apple Silicon (Rust + native MLX C++ bindings)
-brew "lablup/tap/mlxcel"
 # Web browser focusing on privacy
 cask "brave-browser"
 # Open source IDE for exploring and testing APIs
@@ -291,6 +288,7 @@ vscode "saoudrizwan.claude-dev"
 vscode "shopify.ruby-lsp"
 vscode "sporto.rails-go-to-spec"
 vscode "sunshaoce.risc-v"
+vscode "tomoki1207.pdf"
 vscode "usernamehw.errorlens"
 vscode "vayan.haml"
 vscode "xaver.clang-format"
