@@ -1,3 +1,5 @@
+tap "andyyyy64/whichllm", trusted: { formulae: ["whichllm"] }
+tap "lablup/tap", trusted: true
 tap "oven-sh/bun", trusted: true
 # Code searching, linting, rewriting
 brew "ast-grep"
@@ -91,6 +93,8 @@ brew "grex"
 brew "libyaml"
 # Client library for huggingface.co hub
 brew "hf"
+# Spell checker and morphological analyzer
+brew "hunspell"
 # Command-line benchmarking tool
 brew "hyperfine"
 # Generic library support script
@@ -121,6 +125,8 @@ brew "ncdu"
 brew "neovim"
 # Small build system for use with gyp or CMake
 brew "ninja"
+# Headless browser for AI agents and web scraping
+brew "obscura"
 # Create, run, and share large language models (LLMs)
 brew "ollama"
 # Simplified-traditional Chinese conversion tool
@@ -155,6 +161,8 @@ brew "superfile"
 brew "swi-prolog"
 # Cross-platform system diagnostics TUI
 brew "syswatch"
+# Enables extra languages support for Tesseract
+brew "tesseract-lang"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Extremely fast Python type checker, written in Rust
@@ -173,6 +181,8 @@ brew "watchexec"
 brew "yq"
 # General-purpose lossless data-compression library
 brew "zlib"
+# MLX inference engine for Apple Silicon (Rust + native MLX C++ bindings)
+brew "lablup/tap/mlxcel"
 # Web browser focusing on privacy
 cask "brave-browser"
 # Open source IDE for exploring and testing APIs
@@ -296,6 +306,7 @@ vscode "yasuo-higano.prolog-syntax"
 vscode "ziglang.vscode-zig"
 go "cmd/go"
 go "cmd/gofmt"
+go "honnef.co/go/tools/cmd/staticcheck"
 cargo "tre"
 uv "awscli"
 uv "jupyterlab"
