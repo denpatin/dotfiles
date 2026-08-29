@@ -28,6 +28,8 @@ zig = "0.16"
 "gem:solargraph" = "latest"
 ruff = "latest"
 shfmt = "latest"
+erlang = "latest"
+elixir = "latest"
 
 [settings.ruby]
 compile = false
