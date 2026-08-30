@@ -4,6 +4,7 @@ set -gx LANG "en_US.UTF-8"
 set -gx LC_ALL "en_US.UTF-8"
 
 fish_add_path "$HOME/.local/bin"
+fish_add_path "$HOME/.bun/bin"
 
 if test -d /opt/homebrew/opt/llvm
     set -gx PATH /opt/homebrew/opt/llvm/bin $PATH
