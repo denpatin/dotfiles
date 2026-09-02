@@ -61,6 +61,8 @@ brew "fastfetch"
 brew "libomp"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
+# Real-time software synthesizer based on the SoundFont 2 specs
+brew "fluid-synth"
 # Fortran language server
 brew "fortls"
 # GNU compiler collection
