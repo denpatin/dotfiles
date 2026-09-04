@@ -189,6 +189,8 @@ brew "lablup/tap/mlxcel"
 cask "brave-browser"
 # Open source IDE for exploring and testing APIs
 cask "bruno"
+# Desktop client that supports multiple LLM providers
+cask "cherry-studio"
 # Terminal-based AI coding assistant
 cask "claude-code"
 # Menu bar usage monitor for Codex and Claude
@@ -308,7 +310,6 @@ vscode "yasuo-higano.prolog-syntax"
 vscode "ziglang.vscode-zig"
 go "cmd/go"
 go "cmd/gofmt"
-go "honnef.co/go/tools/cmd/staticcheck"
 cargo "tre"
 uv "awscli"
 uv "jupyterlab"
