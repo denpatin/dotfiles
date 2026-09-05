@@ -149,6 +149,8 @@ brew "pv"
 brew "qsv"
 # Sampling profiler for Ruby
 brew "rbspy"
+# Audio time stretcher tool and library
+brew "rubberband"
 # Ruby autoformatter
 brew "rubyfmt"
 # Fast and accurate code counter with complexity and COCOMO estimates
